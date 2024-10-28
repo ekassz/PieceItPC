@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">PieceItPC</string>
-    <string name="item2">Profile</string>
-    <string name="item3">Settings</string>
-    <string name="item">Profile Icon</string>
+    <string name="profileOption">Profile</string>
+    <string name="settingsOption">Settings</string>
+    <string name="profileIcon">Profile Icon</string>
     <string name="newBuild">Start a New Build</string>
     <string name="newContent">Saved Content</string>
 </resources>
