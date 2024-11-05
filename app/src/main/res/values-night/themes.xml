@@ -4,4 +4,7 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="ThemeOverlay.PieceItPC.FullscreenContainer" parent="">
+    </style>
 </resources>

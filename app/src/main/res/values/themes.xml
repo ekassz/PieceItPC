@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.PieceItPC" parent="Base.Theme.PieceItPC" />
+
+    <style name="ThemeOverlay.PieceItPC.FullscreenContainer" parent="">
+    </style>
 </resources>

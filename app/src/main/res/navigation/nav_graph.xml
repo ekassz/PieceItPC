@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/home_screen">
+
+    <fragment
+        android:id="@+id/home_screen"
+        android:name="com.cs407.pieceitpc.HomeScreenFragment"
+        android:label="@string/home_screen"
+        tools:layout="@layout/fragment_home_screen">
+        <action
+            android:id="@+id/homeScreen_to_buildHighlights"
+            app:destination="@id/build_highlights"
+            app:popUpTo="@id/home_screen"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/build_highlights"
+        android:name="com.cs407.pieceitpc.PCBuildHighlights"
+        android:label="@string/home_screen"
+        tools:layout="@layout/fragment_home_screen">
+    </fragment>
+
+
+</navigation>
