@@ -6,5 +6,12 @@
     tools:context=".PCTutorialHighlights">
 
 
-
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="30dp"
+        android:text="PC Tutorial Highlights"
+        android:textSize="20sp" />
 </FrameLayout>
