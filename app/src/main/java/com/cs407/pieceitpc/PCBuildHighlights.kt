@@ -20,11 +20,14 @@ class PCBuildHighlights : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //show back button
+        setupBackNavigation()
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_p_c_build_highlights, container, false)
     }
 
     //might not be right but starting here
+    //findNavController().popBackStack()
     private fun setupBackNavigation() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
