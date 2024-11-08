@@ -10,24 +10,43 @@
     <Button
         android:id="@+id/newBuild"
         android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginEnd="7dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="1dp"
         android:backgroundTint="#3C903C"
         android:text="@string/newBuild"
-        app:layout_constraintBaseline_toBaselineOf="@+id/savedContent"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toStartOf="@+id/savedContent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/savedContent"
         android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#3C903C"
         android:text="@string/newContent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/newBuild"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="409dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="@+id/newBuild"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

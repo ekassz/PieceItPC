@@ -1,25 +1,26 @@
 package com.cs407.pieceitpc
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.cs407.pieceitpc.databinding.FragmentHomeScreenBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
- class HomeScreenFragment : Fragment() {
+class HomeScreenFragment : Fragment() {
+
+     private lateinit var cardRecyclerView: RecyclerView
+     private lateinit var cardAdapter: CardAdapter
+
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
+         setHasOptionsMenu(true)
 
      }
 
@@ -27,11 +28,24 @@ import com.cs407.pieceitpc.databinding.FragmentHomeScreenBinding
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_screen, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_home_screen, container, false)
+
+        //RecycleView
+        cardRecyclerView = view.findViewById(R.id.recyclerView)
+        cardRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        //Sample Hard-Coded Card Item Data
+        val sampleBuilds = getSampleBuilds()
+        cardAdapter = CardAdapter(sampleBuilds)
+        cardRecyclerView.adapter = cardAdapter
+
+        return view
     }
+
      override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
          inflater.inflate(R.menu.profile_menu, menu)
+         super.onCreateOptionsMenu(menu, inflater)
      }
 
      override fun onOptionsItemSelected(item: MenuItem): Boolean {
