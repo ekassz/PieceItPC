@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/home_screen">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/home_screen"
@@ -21,6 +21,18 @@
         android:name="com.cs407.pieceitpc.PCBuildHighlights"
         android:label="@string/home_screen"
         tools:layout="@layout/fragment_home_screen">
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.cs407.pieceitpc.LoginFragment"
+        android:label="@string/login_screen"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_noteListFragment"
+            app:destination="@id/home_screen"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 

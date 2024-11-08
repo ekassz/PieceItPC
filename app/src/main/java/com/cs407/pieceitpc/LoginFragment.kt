@@ -1,5 +1,6 @@
 package com.cs407.pieceitpc
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -24,7 +25,7 @@ import androidx.lifecycle.findViewTreeViewModelStoreOwner
 //import com.cs407.lab5_milestone.data.User
 
 class LoginFragment(
-    //private val injectedUserViewModel: UserViewModel? = null // For testing only
+    private val injectedUserViewModel: UserViewModel? = null // For testing only
 ) : Fragment() {
 
     private lateinit var usernameEditText: EditText
@@ -37,28 +38,30 @@ class LoginFragment(
     private lateinit var userPasswdKV: SharedPreferences
     //private lateinit var noteDB: NoteDatabase
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
+
     ): View {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         //noteDB = NoteDatabase.getDatabase(requireContext())
 
-        /*
+
         usernameEditText = view.findViewById(R.id.usernameEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
         loginButton = view.findViewById(R.id.loginButton)
         errorTextView = view.findViewById(R.id.errorTextView)
 
-         */
 
-        //userViewModel = if (injectedUserViewModel != null) {
-        //    injectedUserViewModel
-        //} else {
+
+        userViewModel = if (injectedUserViewModel != null) {
+            injectedUserViewModel
+        } else {
             // TODO - Use ViewModelProvider to init UserViewModel
             ViewModelProvider(requireActivity())[UserViewModel::class.java]
-            //UserViewModel()
-        //}
+            UserViewModel()
+        }
 
         // TODO - Get shared preferences from using R.string.userPasswdKV as the name
         val context = requireContext()
@@ -96,13 +99,12 @@ class LoginFragment(
                         // TODO: Set the logged-in user in the ViewModel (store user info) (placeholder)
                         userViewModel.setUser(
                             UserState(
-                                //noteDB.userDao().getByName(enteredUserName).userId,
-                                //enteredUserName, enteredPass
+                                1
                             )
                         ) // You will implement this in UserViewModel
 
                         // TODO: Navigate to another fragment after successful login
-                        //findNavController().navigate(R.id.action_loginFragment_to_noteListFragment) // Example navigation action
+                        findNavController().navigate(R.id.action_loginFragment_to_noteListFragment) // Example navigation action
 
                     } else {
                         // TODO: Show an error message if either username or password is empty
