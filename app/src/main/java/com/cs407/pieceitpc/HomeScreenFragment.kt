@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.cs407.pieceitpc.databinding.FragmentHomeScreenBinding
 
 
@@ -28,7 +29,15 @@ import com.cs407.pieceitpc.databinding.FragmentHomeScreenBinding
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_screen, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_home_screen, container, false)
+        val buildButton : Button
+        buildButton = view.findViewById(R.id.newBuild)
+        buildButton.setOnClickListener {
+            findNavController().navigate(R.id.homeScreen_to_buildHighlights)
+        }
+        return view
+
     }
      override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
          inflater.inflate(R.menu.profile_menu, menu)
