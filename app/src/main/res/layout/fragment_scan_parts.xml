@@ -13,22 +13,25 @@
 
     <TextView
         android:id="@+id/buildTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="378dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:text="placeholder"
         android:textSize="24sp"
-        android:layout_marginTop="16dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/buildDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="376dp"
         android:layout_height="wrap_content"
+        android:text="placeholder"
         android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/buildAuthor"
-        android:layout_width="wrap_content"
+        android:layout_width="377dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@android:color/darker_gray"/>
+        android:text="placeholder"
+        android:textColor="@android:color/darker_gray" />
 </LinearLayout>

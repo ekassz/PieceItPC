@@ -1,12 +1,20 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.PieceItPC" parent="Theme.Material3.DayNight">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<resources>
+    <!-- Base application theme -->
+    <style name="Theme.PieceItPC" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your primary and secondary colors -->
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryVariant">@color/greenDark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/teal_200</item>
+
+        <!-- Toolbar style -->
+        <item name="toolbarStyle">@style/Widget.PieceItPC.Toolbar</item>
     </style>
 
-    <style name="Theme.PieceItPC" parent="Base.Theme.PieceItPC" />
-
-    <style name="ThemeOverlay.PieceItPC.FullscreenContainer" parent="">
+    <!-- Define a custom style for the toolbar -->
+    <style name="Widget.PieceItPC.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/green</item>
+        <item name="titleCentered">false</item>
     </style>
 </resources>
+
