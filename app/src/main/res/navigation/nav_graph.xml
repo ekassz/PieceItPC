@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/loginOrGuest">
 
     <fragment
         android:id="@+id/home_screen"
@@ -34,6 +34,38 @@
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/loginOrGuest"
+        android:name="com.cs407.pieceitpc.LoginOrGuest"
+        android:label="@string/login_screen"
+        tools:layout="@layout/fragment_login_or_guest">
+        <action
+            android:id="@+id/action_continue_to_loginFrag"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_register_to_createAccount"
+            app:destination="@id/createAccount"
+            app:popUpTo="@id/createAccount"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAccount"
+        android:name="com.cs407.pieceitpc.CreateAccount"
+        android:label="@string/create_account"
+        tools:layout="@layout/fragment_create_account">
+        <action
+            android:id="@+id/action_continue_to_homeScreen"
+            app:destination="@id/home_screen"
+            app:popUpTo="@id/home_screen"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+
+
 
 
 </navigation>

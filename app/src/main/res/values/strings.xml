@@ -12,7 +12,7 @@
     <string name="tutorial_title">PC Tutorial Highlights</string>
     <string name="username_hint">Enter Username</string>
     <string name="password_hint">Enter Password</string>
-    <string name="login_button">Log In or Sign Up</string>
+    <string name="login_button">Log In </string>
     <string name="userPasswdKV">com.cs407.lab5_milestone.userPasswdKV</string>
     <string name="fail_login">Wrong Username or Password</string>
     <string name="login_screen">LoginScreen</string>
@@ -23,4 +23,7 @@
     <string name="logout">Log Out</string>
     <string name="delete_account">Delete Account</string>
     <string name="greeting_text">Welcome %1$s!</string>
+    <string name="create_account">Create Account</string>
+
+
 </resources>
