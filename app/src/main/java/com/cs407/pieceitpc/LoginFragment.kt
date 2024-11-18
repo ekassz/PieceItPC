@@ -89,11 +89,7 @@ class LoginFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //TODO: does this go here?
-        auth = Firebase.auth
-        val database = FirebaseDatabase.getInstance()
-        val users = database.getReference("users")
-
-
+        auth = FirebaseAuth.getInstance()
 
         usernameEditText.doAfterTextChanged {
             errorTextView.visibility = View.GONE
@@ -110,95 +106,61 @@ class LoginFragment(
             val enteredUserName = usernameEditText.text.toString()
 
             val enteredPass = passwordEditText.text.toString()
-/**
+            /**
             if (enteredPass == "" || enteredUserName == "") {
-                errorTextView.visibility = View.VISIBLE
+            errorTextView.visibility = View.VISIBLE
             } else {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val success = withContext(Dispatchers.IO) {
-                        getUserPasswd(enteredUserName, enteredPass)
-                    }
-
-                    if (success) {
-                        // TODO: Set the logged-in user in the ViewModel (store user info) (placeholder)
-                        userViewModel.setUser(
-                            UserState(
-                                1
-                            )
-                        ) // You will implement this in UserViewModel
-
-                        // TODO: Navigate to another fragment after successful login
-                        findNavController().navigate(R.id.action_loginFragment_to_noteListFragment) // Example navigation action
-
-                    } else {
-                        // TODO: Show an error message if either username or password is empty
-
-
-                        errorTextView.visibility = View.VISIBLE
-                    }
-                }
+            viewLifecycleOwner.lifecycleScope.launch {
+            val success = withContext(Dispatchers.IO) {
+            getUserPasswd(enteredUserName, enteredPass)
             }
-**/
-            //TODO: check validity of user input for email and password
-            if(enteredUserName.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(enteredUserName).matches() && enteredPass.isNotEmpty()) {
-                val check = checkUserWithEmail(enteredUserName)
-                Log.i("INFO", "check: "+check)
-                //inputted user is found, check if password is valid
-                if(check) {
-                    auth.signInWithEmailAndPassword(enteredUserName, enteredPass)
-                        .addOnCompleteListener { task ->
-                            //found user and password match
-                            if (task.isSuccessful) {
-                                errorTextView.text = "Sign-in successful!"
-                                Toast.makeText(requireContext(), "Welcome back, let's get building!", Toast.LENGTH_SHORT).show()
-                                //send user to home screen
-                                findNavController().navigate(R.id.home_screen)
-                            } else {
-                                //user found but password does not match
-                                errorTextView.text = "Sign-in failed: ${task.exception?.message}"
-                            }
-                        }
-                }else{
-                    //user not found, create user
-                    auth.createUserWithEmailAndPassword(enteredUserName, enteredPass)
-                    //Log.i("INFO", "after adding to database: "+auth.currentUser?.metadata?.creationTimestamp)
-                    //save user in database
-                    val index = enteredUserName.indexOf('@')
-                    //uses username as user ID ?
-                    val username = enteredUserName.substring(0, index)
-                    val newUser = Users(username, enteredUserName, enteredPass) //left password unhashed for now
-                    users.child(username).setValue(newUser)
-                    errorTextView.text = "Sign-Up successful!"
-                    //send user to home screen
-                    findNavController().navigate(R.id.home_screen)
-                    Toast.makeText(requireContext(), "Welcome to PieceItPC, let's get building!", Toast.LENGTH_SHORT).show()
-                }
+
+            if (success) {
+            // TODO: Set the logged-in user in the ViewModel (store user info) (placeholder)
+            userViewModel.setUser(
+            UserState(
+            1
+            )
+            ) // You will implement this in UserViewModel
+
+            // TODO: Navigate to another fragment after successful login
+            findNavController().navigate(R.id.action_loginFragment_to_noteListFragment) // Example navigation action
+
             } else {
-                errorTextView.visibility = View.VISIBLE
-                Toast.makeText(requireContext(), "Please input email/password", Toast.LENGTH_SHORT).show()
+            // TODO: Show an error message if either username or password is empty
+
+
+            errorTextView.visibility = View.VISIBLE
+            }
+            }
+            }
+             **/
+            //TODO: check validity of user input for email and password
+            if (enteredPass.isNotEmpty() && enteredUserName.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(
+                    enteredUserName
+                ).matches() && enteredPass.isNotEmpty()
+            ) {
+                auth.signInWithEmailAndPassword(enteredUserName, enteredPass)
+                    .addOnCompleteListener { task ->
+                        //found user and password match
+                        if (task.isSuccessful) {
+                            errorTextView.text = "Sign-in successful!"
+                            Toast.makeText(
+                                requireContext(),
+                                "Welcome back, let's get building!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            //send user to home screen
+                            findNavController().navigate(R.id.home_screen)
+                        } else {
+                            //user found but password does not match
+                            errorTextView.text = "Sign-in failed: ${task.exception?.message}"
+                        }
+                    }
             }
         }
     }
 
-    fun checkUserWithEmail(email: String): Boolean {
-        var check = false
-        FirebaseAuth.getInstance().fetchSignInMethodsForEmail(email)
-            .addOnSuccessListener { result ->
-                if (result.signInMethods?.isNotEmpty() == true) {
-                    // User exists with the given email
-                    check = true
-                } else {
-                    // User does not exist with the given email
-                    check = false
-                }
-            }
-            .addOnFailureListener { exception ->
-                // Handle any errors that occurred while fetching sign-in methods
-                check = false
-                println("Error: ${exception.message}")
-            }
-        return check
-    }
 
     private suspend fun getUserPasswd(
         name: String,
