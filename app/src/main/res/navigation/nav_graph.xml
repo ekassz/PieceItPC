@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/build_highlights"
-        android:name="com.cs407.pieceitpc.PCBuildHighlights"
+        android:name="com.cs407.pieceitpc.ScanPart"
         android:label="@string/home_screen"
         tools:layout="@layout/fragment_home_screen">
     </fragment>
