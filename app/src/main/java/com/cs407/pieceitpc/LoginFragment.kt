@@ -23,6 +23,7 @@ import java.security.MessageDigest
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 //import com.cs407.lab5_milestone.data.User
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment(
     private val injectedUserViewModel: UserViewModel? = null // For testing only
@@ -38,6 +39,9 @@ class LoginFragment(
     private lateinit var userPasswdKV: SharedPreferences
     //private lateinit var noteDB: NoteDatabase
 
+    //set up authentication
+    private lateinit var auth: FirebaseAuth
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,9 +51,14 @@ class LoginFragment(
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         //noteDB = NoteDatabase.getDatabase(requireContext())
 
+        //TODO: does this go here?
+        //auth = FirebaseAuth.getInstance()
 
+        //TODO: get email
         usernameEditText = view.findViewById(R.id.usernameEditText)
+        //TODO: get password
         passwordEditText = view.findViewById(R.id.passwordEditText)
+        //TODO: log in button
         loginButton = view.findViewById(R.id.loginButton)
         errorTextView = view.findViewById(R.id.errorTextView)
 
@@ -72,6 +81,8 @@ class LoginFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //TODO: does this go here?
+        auth = FirebaseAuth.getInstance()
 
         usernameEditText.doAfterTextChanged {
             errorTextView.visibility = View.GONE
@@ -83,10 +94,11 @@ class LoginFragment(
 
         // Set the login button click action
         loginButton.setOnClickListener {
+
             // TODO: Get the entered username and password from EditText fields
             val enteredUserName = usernameEditText.text.toString()
             val enteredPass = passwordEditText.text.toString()
-
+/**
             if (enteredPass == "" || enteredUserName == "") {
                 errorTextView.visibility = View.VISIBLE
             } else {
@@ -113,6 +125,21 @@ class LoginFragment(
                         errorTextView.visibility = View.VISIBLE
                     }
                 }
+            }
+**/
+
+            if (enteredUserName.isNotEmpty() && enteredPass.isNotEmpty()) {
+                auth.signInWithEmailAndPassword(enteredUserName, enteredPass)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            errorTextView.text = "Sign-in successful!"
+                            Toast.makeText(requireContext(), "Welcome back!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            errorTextView.text = "Sign-in failed: ${task.exception?.message}"
+                        }
+                    }
+            } else {
+                Toast.makeText(requireContext(), "Please fill out all fields.", Toast.LENGTH_SHORT).show()
             }
         }
     }
