@@ -34,7 +34,7 @@ class CardAdapter(private val buildList: List<CardItem>) :
         // Set click listener for the card
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, PCBuildHighlights::class.java).apply {
+            val intent = Intent(context, ScanPart::class.java).apply {
                 putExtra("BUILD_TITLE", currentBuild.title)
                 putExtra("BUILD_DESCRIPTION", currentBuild.description)
                 putExtra("BUILD_AUTHOR", currentBuild.author)
