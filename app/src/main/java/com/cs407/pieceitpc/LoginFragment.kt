@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
@@ -22,7 +23,13 @@ import kotlinx.coroutines.withContext
 import java.security.MessageDigest
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import com.google.firebase.Firebase
 //import com.cs407.lab5_milestone.data.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
 
 class LoginFragment(
     private val injectedUserViewModel: UserViewModel? = null // For testing only
@@ -38,6 +45,10 @@ class LoginFragment(
     private lateinit var userPasswdKV: SharedPreferences
     //private lateinit var noteDB: NoteDatabase
 
+    //used for log in
+    private lateinit var auth: FirebaseAuth
+
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,9 +58,14 @@ class LoginFragment(
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         //noteDB = NoteDatabase.getDatabase(requireContext())
 
+        //TODO: does this go here?
+        //auth = FirebaseAuth.getInstance()
 
+        //TODO: get email
         usernameEditText = view.findViewById(R.id.usernameEditText)
+        //TODO: get password
         passwordEditText = view.findViewById(R.id.passwordEditText)
+        //TODO: log in button
         loginButton = view.findViewById(R.id.loginButton)
         errorTextView = view.findViewById(R.id.errorTextView)
 
@@ -65,13 +81,19 @@ class LoginFragment(
 
         // TODO - Get shared preferences from using R.string.userPasswdKV as the name
         val context = requireContext()
-        var sharedPreferences = context.getSharedPreferences(
-            getString(R.string.userPasswdKV), Context.MODE_PRIVATE)
+        //var sharedPreferences = context.getSharedPreferences(
+           // getString(R.string.userPasswdKV), Context.MODE_PRIVATE)
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //TODO: does this go here?
+        auth = Firebase.auth
+        val database = FirebaseDatabase.getInstance()
+        val users = database.getReference("users")
+
+
 
         usernameEditText.doAfterTextChanged {
             errorTextView.visibility = View.GONE
@@ -83,10 +105,12 @@ class LoginFragment(
 
         // Set the login button click action
         loginButton.setOnClickListener {
+
             // TODO: Get the entered username and password from EditText fields
             val enteredUserName = usernameEditText.text.toString()
-            val enteredPass = passwordEditText.text.toString()
 
+            val enteredPass = passwordEditText.text.toString()
+/**
             if (enteredPass == "" || enteredUserName == "") {
                 errorTextView.visibility = View.VISIBLE
             } else {
@@ -114,7 +138,66 @@ class LoginFragment(
                     }
                 }
             }
+**/
+            //TODO: check validity of user input for email and password
+            if(enteredUserName.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(enteredUserName).matches() && enteredPass.isNotEmpty()) {
+                val check = checkUserWithEmail(enteredUserName)
+                Log.i("INFO", "check: "+check)
+                //inputted user is found, check if password is valid
+                if(check) {
+                    auth.signInWithEmailAndPassword(enteredUserName, enteredPass)
+                        .addOnCompleteListener { task ->
+                            //found user and password match
+                            if (task.isSuccessful) {
+                                errorTextView.text = "Sign-in successful!"
+                                Toast.makeText(requireContext(), "Welcome back, let's get building!", Toast.LENGTH_SHORT).show()
+                                //send user to home screen
+                                findNavController().navigate(R.id.home_screen)
+                            } else {
+                                //user found but password does not match
+                                errorTextView.text = "Sign-in failed: ${task.exception?.message}"
+                            }
+                        }
+                }else{
+                    //user not found, create user
+                    auth.createUserWithEmailAndPassword(enteredUserName, enteredPass)
+                    //Log.i("INFO", "after adding to database: "+auth.currentUser?.metadata?.creationTimestamp)
+                    //save user in database
+                    val index = enteredUserName.indexOf('@')
+                    //uses username as user ID ?
+                    val username = enteredUserName.substring(0, index)
+                    val newUser = Users(username, enteredUserName, enteredPass) //left password unhashed for now
+                    users.child(username).setValue(newUser)
+                    errorTextView.text = "Sign-Up successful!"
+                    //send user to home screen
+                    findNavController().navigate(R.id.home_screen)
+                    Toast.makeText(requireContext(), "Welcome to PieceItPC, let's get building!", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                errorTextView.visibility = View.VISIBLE
+                Toast.makeText(requireContext(), "Please input email/password", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+    fun checkUserWithEmail(email: String): Boolean {
+        var check = false
+        FirebaseAuth.getInstance().fetchSignInMethodsForEmail(email)
+            .addOnSuccessListener { result ->
+                if (result.signInMethods?.isNotEmpty() == true) {
+                    // User exists with the given email
+                    check = true
+                } else {
+                    // User does not exist with the given email
+                    check = false
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Handle any errors that occurred while fetching sign-in methods
+                check = false
+                println("Error: ${exception.message}")
+            }
+        return check
     }
 
     private suspend fun getUserPasswd(
