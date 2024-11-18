@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanPart">
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/buildImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="258dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="200dp"
-        android:text="@string/scan"
-        android:textAlignment="viewStart"
-        android:textSize="24sp" />
-</FrameLayout>
+        android:id="@+id/buildTitle"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="placeholder"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/buildDescription"
+        android:layout_width="376dp"
+        android:layout_height="wrap_content"
+        android:text="placeholder"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/buildAuthor"
+        android:layout_width="377dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="placeholder"
+        android:textColor="@android:color/darker_gray" />
+</LinearLayout>

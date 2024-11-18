@@ -1,7 +1,8 @@
 <resources>
-
-    <style name="Widget.Theme.PieceItPC.ButtonBar.Fullscreen" parent="">
-        <item name="android:background">@color/black_overlay</item>
+    <!-- Define custom button bar style -->
+    <style name="Widget.PieceItPC.ButtonBar" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@color/green</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="android:padding">8dp</item>
     </style>
 </resources>

@@ -1,26 +1,29 @@
 package com.cs407.pieceitpc
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.cs407.pieceitpc.databinding.FragmentHomeScreenBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 
 
- class HomeScreenFragment : Fragment() {
+class HomeScreenFragment : Fragment() {
+
+     private lateinit var cardRecyclerView: RecyclerView
+     private lateinit var cardAdapter: CardAdapter
+
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
+         setHasOptionsMenu(true)
 
      }
 
@@ -28,19 +31,33 @@ import com.cs407.pieceitpc.databinding.FragmentHomeScreenBinding
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_home_screen, container, false)
-        val buildButton : Button
-        buildButton = view.findViewById(R.id.newBuild)
-        buildButton.setOnClickListener {
-            findNavController().navigate(R.id.homeScreen_to_buildHighlights)
-        }
-        return view
 
+        // Set up the toolbar
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar?.title = getString(R.string.app_name)
+        toolbar?.setNavigationIcon(R.drawable.small_app_icon)
+        toolbar?.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        //RecycleView
+        cardRecyclerView = view.findViewById(R.id.recyclerView)
+        cardRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        //Sample Hard-Coded Card Item Data
+        val sampleBuilds = getSampleBuilds()
+        cardAdapter = CardAdapter(sampleBuilds)
+        cardRecyclerView.adapter = cardAdapter
+
+        return view
     }
+
      override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
          inflater.inflate(R.menu.profile_menu, menu)
+         super.onCreateOptionsMenu(menu, inflater)
      }
 
      override fun onOptionsItemSelected(item: MenuItem): Boolean {
