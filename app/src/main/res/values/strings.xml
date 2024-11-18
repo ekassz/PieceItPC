@@ -3,7 +3,7 @@
     <string name="profileOption">Profile</string>
     <string name="settingsOption">Settings</string>
     <string name="profileIcon">Profile Icon</string>
-    <string name="newBuild">Start a New Build</string>
+    <string name="newBuild">Start New Build</string>
     <string name="newContent">Saved Content</string>
     <string name="home_screen">HomeScreen</string>
     <!-- TODO: Remove or change this placeholder text -->
