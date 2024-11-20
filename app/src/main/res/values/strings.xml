@@ -3,16 +3,16 @@
     <string name="profileOption">Profile</string>
     <string name="settingsOption">Settings</string>
     <string name="profileIcon">Profile Icon</string>
-    <string name="newBuild">Start a New Build</string>
+    <string name="newBuild">Start New Build</string>
     <string name="newContent">Saved Content</string>
     <string name="home_screen">HomeScreen</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="build_highlights">PC Build Highlights</string>
+    <string name="scan">Scan Your PC Part Here</string>
     <string name="tutorial_title">PC Tutorial Highlights</string>
-    <string name="username_hint">Enter Username</string>
+    <string name="username_hint">Enter Email</string>
     <string name="password_hint">Enter Password</string>
-    <string name="login_button">Log In or Sign Up</string>
+    <string name="login_button">Log In </string>
     <string name="userPasswdKV">com.cs407.lab5_milestone.userPasswdKV</string>
     <string name="fail_login">Wrong Username or Password</string>
     <string name="login_screen">LoginScreen</string>
@@ -23,4 +23,6 @@
     <string name="logout">Log Out</string>
     <string name="delete_account">Delete Account</string>
     <string name="greeting_text">Welcome %1$s!</string>
+    <string name="build_highlights">PC Build Highlights</string>>
+    <string name="create_account">Create Account</string>
 </resources>
