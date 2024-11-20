@@ -10,16 +10,16 @@
         android:id="@+id/headerSection"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="#4CAF50">
+        android:background="@color/green">
 
         <ImageView
             android:id="@+id/appIcon"
-            android:layout_width="98dp"
-            android:layout_height="88dp"
+            android:layout_width="133dp"
+            android:layout_height="145dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="60dp"
             android:contentDescription="App Icon"
-            android:src="@drawable/small_app_icon" />
+            android:src="@drawable/app_icon" />
 
         <TextView
             android:id="@+id/appTitle"
@@ -29,7 +29,7 @@
             android:layout_below="@id/appIcon"
             android:layout_marginTop="8dp"
             android:text="PieceItPC"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -40,7 +40,7 @@
         android:layout_height="60dp"
         android:layout_gravity="top"
         android:layout_marginTop="240dp"
-        android:background="@drawable/wave_scheme" />
+        android:background="@color/green" />
 
     <LinearLayout
         android:id="@+id/formContent"
@@ -83,6 +83,15 @@
             android:inputType="textPassword"
             android:textColor="#000000"
             android:textColorHint="#888888" />
+
+        <TextView
+            android:id="@+id/errorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp" />
 
         <Button
             android:id="@+id/continueButton"

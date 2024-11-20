@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -20,6 +21,9 @@ class HomeScreenFragment : Fragment() {
 
      private lateinit var cardRecyclerView: RecyclerView
      private lateinit var cardAdapter: CardAdapter
+     private lateinit var startNewBuild: Button
+     private lateinit var savedContent: Button
+     private lateinit var buildTuts: Button
 
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
@@ -51,6 +55,21 @@ class HomeScreenFragment : Fragment() {
         val sampleBuilds = getSampleBuilds()
         cardAdapter = CardAdapter(sampleBuilds)
         cardRecyclerView.adapter = cardAdapter
+
+        startNewBuild = view.findViewById(R.id.newBuild)
+        savedContent = view.findViewById(R.id.savedContent)
+        buildTuts = view.findViewById(R.id.tutorials)
+
+        startNewBuild.setOnClickListener {
+            findNavController().navigate(R.id.newBuild)
+        }
+
+        buildTuts.setOnClickListener {
+            findNavController().navigate(R.id.homeScreen_to_buildHighlights)
+        }
+        savedContent.setOnClickListener{
+            findNavController().navigate(R.id.savedContent)
+        }
 
         return view
     }

@@ -45,18 +45,18 @@ class CreateAccount(private val injectedUserViewModel: UserViewModel? = null // 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        val view = inflater.inflate(R.layout.fragment_create_account, container, false)
         //noteDB = NoteDatabase.getDatabase(requireContext())
 
         //TODO: does this go here?
         //auth = FirebaseAuth.getInstance()
 
         //TODO: get email
-        usernameEditText = view.findViewById(R.id.usernameEditText)
+        usernameEditText = view.findViewById(R.id.usernameField)
         //TODO: get password
-        passwordEditText = view.findViewById(R.id.passwordEditText)
+        passwordEditText = view.findViewById(R.id.passwordField)
         //TODO: log in button
-        loginButton = view.findViewById(R.id.loginButton)
+        loginButton = view.findViewById(R.id.continueButton)
         errorTextView = view.findViewById(R.id.errorTextView)
 
         userViewModel = if (injectedUserViewModel != null) {
@@ -103,17 +103,50 @@ class CreateAccount(private val injectedUserViewModel: UserViewModel? = null // 
         loginButton.setOnClickListener {
 
             // TODO: Get the entered username and password from EditText fields
-            val enteredUserName = usernameEditText.text.toString()
+            val enteredUserName = usernameEditText.text.toString().trim()
+            val enteredPass = passwordEditText.text.toString().trim()
 
-            val enteredPass = passwordEditText.text.toString()
-            if (enteredPass.isNotEmpty() && enteredUserName.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(enteredUserName).matches() && enteredPass.isNotEmpty()) {
-                auth.createUserWithEmailAndPassword(enteredUserName, enteredPass)
-                //Log.i("INFO", "after adding to database: "+auth.currentUser?.metadata?.creationTimestamp)
-                errorTextView.text = "Sign-Up successful!"
-                //send user to home screen
-                findNavController().navigate(R.id.home_screen)
-                Toast.makeText(requireContext(), "Welcome to PieceItPC, let's get building!", Toast.LENGTH_SHORT).show()
+            // Validate inputs
+            if (enteredUserName.isEmpty()) {
+                errorTextView.text = "Username is required."
+                errorTextView.visibility = View.VISIBLE
+                return@setOnClickListener
             }
+
+            if (!Patterns.EMAIL_ADDRESS.matcher(enteredUserName).matches()) {
+                errorTextView.text = "Invalid email format."
+                errorTextView.visibility = View.VISIBLE
+                return@setOnClickListener
+            }
+
+            if (enteredPass.isEmpty()) {
+                errorTextView.text = "Password is required."
+                errorTextView.visibility = View.VISIBLE
+                return@setOnClickListener
+            }
+
+            if (enteredPass.length < 6) {
+                errorTextView.text = "Password must be at least 6 characters long."
+                errorTextView.visibility = View.VISIBLE
+                return@setOnClickListener
+            }
+
+            // Attempt to create user
+            auth.createUserWithEmailAndPassword(enteredUserName, enteredPass)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        errorTextView.visibility = View.GONE
+                        findNavController().navigate(R.id.home_screen)
+                        Toast.makeText(
+                            requireContext(),
+                            "Welcome to PieceItPC, let's get building!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        errorTextView.text = "Sign-Up failed: ${task.exception?.localizedMessage}"
+                        errorTextView.visibility = View.VISIBLE
+                    }
+                }
         }
     }
 }

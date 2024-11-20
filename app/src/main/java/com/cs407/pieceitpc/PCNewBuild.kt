@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 
 
-class PCBuildHighlights : Fragment() {
+class PCNewBuild : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +22,7 @@ class PCBuildHighlights : Fragment() {
         //show back button
         setupBackNavigation()
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_p_c_build_highlights, container, false)
+        return inflater.inflate(R.layout.fragment_new_build, container, false)
     }
 
     //might not be right but starting here
