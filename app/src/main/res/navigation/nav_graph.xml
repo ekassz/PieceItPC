@@ -12,16 +12,49 @@
         <action
             android:id="@+id/homeScreen_to_buildHighlights"
             app:destination="@id/build_highlights"
-            app:popUpTo="@id/home_screen"
-            app:popUpToInclusive="true"/>
+            />
+
+        <action
+            android:id="@+id/newBuild"
+            app:destination="@id/newBuild"
+            />
+
+        <action
+            android:id="@+id/savedContent"
+            app:destination="@id/savedContent"
+            />
     </fragment>
 
     <fragment
         android:id="@+id/build_highlights"
-        android:name="com.cs407.pieceitpc.ScanPart"
-        android:label="@string/home_screen"
-        tools:layout="@layout/fragment_home_screen">
+        android:name="com.cs407.pieceitpc.PCTutorialHighlights"
+        android:label="@string/build_highlights"
+        tools:layout="@layout/fragment_p_c_tutorial_highlights">
+        <action
+            android:id="@+id/action_build_highlights_to_home_screen"
+            app:destination="@id/home_screen" />
     </fragment>
+
+    <fragment
+        android:id="@+id/newBuild"
+        android:name="com.cs407.pieceitpc.PCNewBuild"
+        android:label="@string/newBuild"
+        tools:layout="@layout/fragment_new_build" >
+        <action
+            android:id="@+id/action_newBuild_to_home_screen"
+            app:destination="@id/home_screen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/savedContent"
+        android:name="com.cs407.pieceitpc.SavedContent"
+        android:label="@string/newBuild"
+        tools:layout="@layout/fragment_saved_content" >
+        <action
+            android:id="@+id/action_savedContent_to_home_screen"
+            app:destination="@id/home_screen" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/loginFragment"

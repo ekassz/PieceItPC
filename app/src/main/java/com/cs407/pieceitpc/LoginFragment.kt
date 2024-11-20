@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.*
 import android.widget.Button
@@ -14,22 +13,9 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-//import com.cs407.lab5_milestone.data.NoteDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.security.MessageDigest
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import com.google.firebase.Firebase
-//import com.cs407.lab5_milestone.data.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.database
 
 class LoginFragment(
     private val injectedUserViewModel: UserViewModel? = null // For testing only
