@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/greenDark"
+        android:title="@string/app_name"
+        app:contentInsetStart="15dp"
+        app:contentInsetStartWithNavigation="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/scanImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/profile_menu"
+        app:navigationIcon="@drawable/small_app_icon" />
+
     <ImageView
         android:id="@+id/buildImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop" />
+        android:layout_height="500dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/part" />
 
-    <TextView
-        android:id="@+id/buildTitle"
-        android:layout_width="378dp"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="placeholder"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:text="Scan Your Part!" />
 
-    <TextView
-        android:id="@+id/buildDescription"
-        android:layout_width="376dp"
-        android:layout_height="wrap_content"
-        android:text="placeholder"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/buildAuthor"
-        android:layout_width="377dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="placeholder"
-        android:textColor="@android:color/darker_gray" />
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -24,6 +25,7 @@ class HomeScreenFragment : Fragment() {
      private lateinit var startNewBuild: Button
      private lateinit var savedContent: Button
      private lateinit var buildTuts: Button
+     private lateinit var scan: ImageView
 
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
@@ -59,6 +61,7 @@ class HomeScreenFragment : Fragment() {
         startNewBuild = view.findViewById(R.id.newBuild)
         savedContent = view.findViewById(R.id.savedContent)
         buildTuts = view.findViewById(R.id.tutorials)
+        scan = view.findViewById(R.id.scanImage)
 
         startNewBuild.setOnClickListener {
             findNavController().navigate(R.id.newBuild)
@@ -69,6 +72,9 @@ class HomeScreenFragment : Fragment() {
         }
         savedContent.setOnClickListener{
             findNavController().navigate(R.id.savedContent)
+        }
+        scan.setOnClickListener {
+            findNavController().navigate(R.id.scan)
         }
 
         return view

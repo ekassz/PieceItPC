@@ -20,7 +20,7 @@
             android:title="@string/app_name"
             app:contentInsetStart="15dp"
             app:contentInsetStartWithNavigation="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/imageView3"
+            app:layout_constraintBottom_toTopOf="@+id/scanImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -110,7 +110,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/scanImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
