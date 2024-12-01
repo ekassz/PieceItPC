@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import androidx.fragment.app.viewModels
 
 
 class HomeScreenFragment : Fragment() {
@@ -30,8 +32,9 @@ class HomeScreenFragment : Fragment() {
      private lateinit var savedContent: Button
      private lateinit var buildTuts: Button
      private lateinit var scan: ImageView
+    val viewModel: UserViewModel by activityViewModels()
 
-     override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
          setHasOptionsMenu(true)
 
@@ -74,7 +77,7 @@ class HomeScreenFragment : Fragment() {
                         author = data["author"] as? String ?: "Unknown"
                     ))
                 }
-                cardAdapter = CardAdapter(builds, this)
+                cardAdapter = CardAdapter(builds, this, viewModel)
                 cardRecyclerView.adapter = cardAdapter
             }
             .addOnFailureListener { exception ->

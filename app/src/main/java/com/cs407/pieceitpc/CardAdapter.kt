@@ -7,13 +7,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class CardAdapter(private val buildList: List<CardItem>, val homeScreen : Fragment) :
-    RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
 
+class CardAdapter(private val buildList: List<CardItem>, homeScreen : Fragment, viewModel: UserViewModel) :
+    RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
         val parent = homeScreen
+        val viewModel = viewModel
+
 
     inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val buildImage: ImageView = itemView.findViewById(R.id.cardImage)
@@ -45,7 +48,8 @@ class CardAdapter(private val buildList: List<CardItem>, val homeScreen : Fragme
 //                putExtra("BUILD_IMAGE", currentBuild.imageResId)
 //            }
 //            context.startActivity(intent)
-            parent. findNavController().navigate(R.id.build_highlights)
+            viewModel.setBuildVal(currentBuild.id)
+            parent.findNavController().navigate(R.id.build_highlights)
 
         }
     }
