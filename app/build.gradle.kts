@@ -62,4 +62,14 @@ dependencies {
     implementation ("com.google.firebase:firebase-database:21.0.0")
     implementation("com.google.firebase:firebase-auth:23.1.0")
 
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-firestore-ktx:24.5.0")
+
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // Main coroutines library
+
+
 }

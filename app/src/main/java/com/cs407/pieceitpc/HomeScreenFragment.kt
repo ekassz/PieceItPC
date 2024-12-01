@@ -1,6 +1,7 @@
 package com.cs407.pieceitpc
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,6 +17,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class HomeScreenFragment : Fragment() {
@@ -53,10 +57,33 @@ class HomeScreenFragment : Fragment() {
         cardRecyclerView = view.findViewById(R.id.recyclerView)
         cardRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
+        val db = Firebase.firestore
+        db.collection("pcBuilds")
+            .orderBy("timeMS", Query.Direction.DESCENDING)
+            .limit(3)
+            .get()
+            .addOnSuccessListener { document ->
+                val builds = mutableListOf<CardItem>()
+                for (doc in document) {
+                    val data = doc.data
+                    builds.add(CardItem(
+                        id = doc.id,
+                        imageResId = R.drawable.placeholder,
+                        title = data["title"] as? String ?: "Untitled",
+                        description = data["summary"] as? String ?: "No description",
+                        author = data["author"] as? String ?: "Unknown"
+                    ))
+                }
+                cardAdapter = CardAdapter(builds, this)
+                cardRecyclerView.adapter = cardAdapter
+            }
+            .addOnFailureListener { exception ->
+                Log.e("FIREBASERROR", "error getting pc builds " + exception)
+            }
+
         //Sample Hard-Coded Card Item Data
-        val sampleBuilds = getSampleBuilds()
-        cardAdapter = CardAdapter(sampleBuilds)
-        cardRecyclerView.adapter = cardAdapter
+//        val sampleBuilds = getSampleBuilds()
+
 
         startNewBuild = view.findViewById(R.id.newBuild)
         savedContent = view.findViewById(R.id.savedContent)
