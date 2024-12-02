@@ -35,35 +35,41 @@
             android:textColor="@android:color/black"
             android:textSize="23sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/uploadImageLabel"
+            app:layout_constraintBottom_toTopOf="@+id/pcImageUploadContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/uploadImageLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="60dp"
-            android:text="Upload PC Image"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-        <ImageView
-            android:id="@+id/pcImageUpload"
+        <FrameLayout
+            android:id="@+id/pcImageUploadContainer"
             android:layout_width="324dp"
             android:layout_height="161dp"
-            android:layout_marginTop="20dp"
-            android:src="@color/green"
+            android:layout_marginTop="60dp"
+            android:background="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/uploadImageLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <ImageView
+                android:id="@+id/pcImageUpload"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="PC Image Upload" />
+
+            <TextView
+                android:id="@+id/pcImageHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Upload PC Image"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/uploadImageButton"
@@ -75,7 +81,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.176"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pcImageUpload" />
+            app:layout_constraintTop_toBottomOf="@id/pcImageUploadContainer" />
 
         <TextView
             android:id="@+id/newPCBuildName"
@@ -85,7 +91,7 @@
             android:layout_marginTop="12dp"
             android:text="Build Name"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/uploadImageButton" />
@@ -114,7 +120,7 @@
             android:layout_marginTop="20dp"
             android:text="Build Description"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/newBuildTitle" />
@@ -142,25 +148,487 @@
             android:layout_marginTop="16dp"
             android:text="Parts List"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buildDescription" />
 
-        <EditText
-            android:id="@+id/partsInput"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/cpu"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="CPU"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/cpuInput"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/partsLabel" />
+
+        <EditText
+            android:id="@+id/cpuInput"
+            android:layout_width="215dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="top"
+            android:hint="Enter CPU"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cpu"
+            app:layout_constraintTop_toBottomOf="@+id/buildDescription" />
+
+
+        <EditText
+            android:id="@+id/input_cpu_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:hint="Enter CPU cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cpuInput" />
+
+        <TextView
+            android:id="@+id/cpu_cooler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="CPU Cooler"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/cpu_cooler_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cpu" />
+
+        <EditText
+            android:id="@+id/cpu_cooler_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
             android:gravity="top"
-            android:hint="Enter parts (one per line)"
+            android:hint="Enter CPU Cooler"
             android:inputType="textMultiLine"
             android:minHeight="100dp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cpu_cooler"
+            app:layout_constraintTop_toBottomOf="@+id/input_cpu_cost" />
+
+
+        <EditText
+            android:id="@+id/input_cpu_cooler_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Enter CPU Cooler cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/partsLabel" />
+            app:layout_constraintTop_toBottomOf="@id/cpu_cooler_input" />
+
+        <TextView
+            android:id="@+id/motherboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="Motherboard"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/motherboard_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cpu_cooler" />
+
+        <EditText
+            android:id="@+id/motherboard_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="45dp"
+            android:gravity="top"
+            android:hint="Enter Motherboard"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/motherboard"
+            app:layout_constraintTop_toBottomOf="@+id/input_cpu_cooler_cost" />
+
+
+        <EditText
+            android:id="@+id/motherboard_input_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Enter Motherboard cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/motherboard_input" />
+
+        <TextView
+            android:id="@+id/memory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="Memory"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/memory_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/motherboard" />
+
+        <EditText
+            android:id="@+id/memory_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="45dp"
+            android:gravity="top"
+            android:hint="Enter Memory"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/motherboard"
+            app:layout_constraintTop_toBottomOf="@+id/motherboard_input_cost" />
+
+
+        <EditText
+            android:id="@+id/memory_input_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Enter Memory cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/memory_input" />
+
+        <TextView
+            android:id="@+id/storage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="Storage"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/storage_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/memory" />
+
+        <EditText
+            android:id="@+id/storage_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="22dp"
+            android:gravity="top"
+            android:hint="Enter Storage"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/storage"
+            app:layout_constraintTop_toBottomOf="@+id/memory_input_cost" />
+
+
+        <EditText
+            android:id="@+id/storage_input_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Enter Storage cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/storage_input" />
+
+        <TextView
+            android:id="@+id/videocard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="Video Card"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/videocard_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/storage" />
+
+        <EditText
+            android:id="@+id/videocard_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="35dp"
+            android:gravity="top"
+            android:hint="Enter Video Card"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/videocard"
+            app:layout_constraintTop_toBottomOf="@+id/storage_input_cost" />
+
+
+        <EditText
+            android:id="@+id/videocard_input_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Enter Video Card cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/videocard_input" />
+
+        <TextView
+            android:id="@+id/pccase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="Case"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/case_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/videocard" />
+
+        <EditText
+            android:id="@+id/case_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="top"
+            android:hint="Enter Case"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pccase"
+            app:layout_constraintTop_toBottomOf="@+id/videocard_input_cost" />
+
+
+        <EditText
+            android:id="@+id/case_input_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Enter Case cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/case_input" />
+
+        <TextView
+            android:id="@+id/powersupply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="Power Supply"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/powersupply_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pccase" />
+
+        <EditText
+            android:id="@+id/powersupply_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="45dp"
+            android:gravity="top"
+            android:hint="Enter Power Supply"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/powersupply"
+            app:layout_constraintTop_toBottomOf="@+id/case_input_cost" />
+
+
+        <EditText
+            android:id="@+id/powersupply_input_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Enter Power Supply cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/powersupply_input" />
+
+        <TextView
+            android:id="@+id/casefans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="Case Fans"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/casefans_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/powersupply" />
+
+        <EditText
+            android:id="@+id/casefans_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="33dp"
+            android:gravity="top"
+            android:hint="Enter Case Fans"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/casefans"
+            app:layout_constraintTop_toBottomOf="@+id/powersupply_input_cost" />
+
+
+        <EditText
+            android:id="@+id/casefans_input_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="18dp"
+            android:hint="Enter Case Fans cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/casefans_input" />
+
+        <TextView
+            android:id="@+id/custom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="76dp"
+            android:text="Custom"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/custom_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/casefans" />
+
+        <EditText
+            android:id="@+id/custom_input"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="25dp"
+            android:gravity="top"
+            android:hint="Enter Custom"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/custom"
+            app:layout_constraintTop_toBottomOf="@+id/casefans_input_cost" />
+
+
+        <EditText
+            android:id="@+id/custom_input_cost"
+            android:layout_width="218dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Enter Custom cost"
+            android:inputType="numberDecimal"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.757"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_input" />
+
+        <TextView
+            android:id="@+id/totalCostLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="45dp"
+            android:text="Total Cost:"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_input_cost" />
+
+        <TextView
+            android:id="@+id/totalCostValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:text="0.00"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/totalCostLabel"
+            app:layout_constraintTop_toBottomOf="@id/custom_input_cost" />
+
 
         <Button
             android:id="@+id/submitButton"
@@ -174,7 +642,7 @@
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/partsInput" />
+            app:layout_constraintTop_toBottomOf="@id/totalCostValue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
