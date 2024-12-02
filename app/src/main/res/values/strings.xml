@@ -25,4 +25,6 @@
     <string name="greeting_text">Welcome %1$s!</string>
     <string name="build_highlights">PC Build Highlights</string>>
     <string name="create_account">Create Account</string>
+    <string name="error">Error</string>
+    <string name="label_recognition_error">Label Recognition Error</string>
 </resources>

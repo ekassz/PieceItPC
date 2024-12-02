@@ -14,6 +14,11 @@ navigationUiKtx = "2.8.3"
 firebaseAuthKtx = "23.1.0"
 firebaseDatabase = "21.0.0"
 firebaseAuth = "23.1.0"
+cameraLifecycle = "1.4.0"
+firebaseMlVision = "24.1.0"
+visionCommon = "17.3.0"
+imageLabelingCommon = "18.1.0"
+imageLabelingDefaultCommon = "17.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,6 +34,11 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraLifecycle" }
+firebase-ml-vision = { group = "com.google.firebase", name = "firebase-ml-vision", version.ref = "firebaseMlVision" }
+vision-common = { group = "com.google.mlkit", name = "vision-common", version.ref = "visionCommon" }
+image-labeling-common = { group = "com.google.mlkit", name = "image-labeling-common", version.ref = "imageLabelingCommon" }
+image-labeling-default-common = { group = "com.google.mlkit", name = "image-labeling-default-common", version.ref = "imageLabelingDefaultCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
