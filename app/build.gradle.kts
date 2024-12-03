@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     //added from lucy for firebase
-    //id("com.android.application")
     id("com.google.gms.google-services")
 }
 
@@ -53,7 +52,6 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
-    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,6 +69,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.5.0")
 
     testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // Main coroutines library
+
+    implementation("com.github.bumptech.glide:glide:4.15.1")
 
 
 }

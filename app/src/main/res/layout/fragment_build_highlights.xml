@@ -16,11 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/greenDark"
-            android:title="PieceItPC"
             android:titleTextColor="@android:color/white"
             app:contentInsetStart="15dp"
             app:contentInsetStartWithNavigation="15dp"
-            app:navigationIcon="@drawable/small_app_icon"
+            app:menu="@menu/profile_menu"
+            app:navigationIcon="@drawable/back"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -28,13 +28,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/build_highlights"
-            android:textSize="24sp"
+            android:text="Title Placeholder"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
 
         <ImageView
             android:id="@+id/pcImage"

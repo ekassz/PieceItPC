@@ -69,9 +69,11 @@ class HomeScreenFragment : Fragment() {
                 val builds = mutableListOf<CardItem>()
                 for (doc in document) {
                     val data = doc.data
+                    val imagePath = data["imagePath"] as? String
+                        ?: "android.resource://${requireContext().packageName}/drawable/pcdefault"
                     builds.add(CardItem(
                         id = doc.id,
-                        imageResId = R.drawable.placeholder,
+                        imageResId = imagePath,
                         title = data["title"] as? String ?: "Untitled",
                         description = data["summary"] as? String ?: "No description",
                         author = data["author"] as? String ?: "Unknown"

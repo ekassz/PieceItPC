@@ -28,16 +28,24 @@
             android:id="@+id/cardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="PC Build ~1K"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_margin="8dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="Title will be cut if too long"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/cardDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="This is my first PC build..." />
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_margin="8dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="Description will be cut if too long" />
 
         <TextView
             android:id="@+id/cardAuthor"

@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
 import java.util.UUID
 
 
@@ -29,12 +31,14 @@ class PCNewBuild : Fragment() {
     private lateinit var uploadImageButton: Button
     private lateinit var buildNameEditText: EditText
     private lateinit var buildDescriptionEditText: EditText
-    private lateinit var partsInputEditText: EditText
     private lateinit var submitButton: Button
     private var imageUri: Uri? = null
     private val PICK_IMAGE_REQUEST = 1
     private lateinit var costFields: List<EditText>
+    private lateinit var partNameFields: List<EditText>
     private lateinit var totalCostText: TextView
+
+    private val db = com.google.firebase.ktx.Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +73,20 @@ class PCNewBuild : Fragment() {
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
+        // Part Names List
+        partNameFields = listOf(
+            view.findViewById(R.id.cpuInput),
+            view.findViewById(R.id.cpu_cooler_input),
+            view.findViewById(R.id.motherboard_input),
+            view.findViewById(R.id.memory_input),
+            view.findViewById(R.id.storage_input),
+            view.findViewById(R.id.videocard_input),
+            view.findViewById(R.id.case_input),
+            view.findViewById(R.id.powersupply_input),
+            view.findViewById(R.id.casefans_input),
+            view.findViewById(R.id.custom_input)
+        )
+
         //Total Cost Setup
         costFields = listOf(
             view.findViewById(R.id.input_cpu_cost),
@@ -95,6 +113,71 @@ class PCNewBuild : Fragment() {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
         }
+
+        buildNameEditText = view.findViewById(R.id.newBuildTitle)
+        buildDescriptionEditText = view.findViewById(R.id.buildDescription)
+        submitButton = view.findViewById(R.id.submitButton)
+
+
+        submitButton.setOnClickListener {
+            val buildName = buildNameEditText.text.toString()
+            val buildDescription = buildDescriptionEditText.text.toString()
+            val totalCost = totalCostText.text.toString().toDouble()
+            val parts = mutableMapOf<String, String>()
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val author = currentUser?.email ?: "Anonymous"
+            var isValid = true
+
+            partNameFields.forEachIndexed { index, partNameField ->
+                val partName = partNameField.text.toString().trim()
+                val partCost = costFields[index].text.toString().trim()
+
+                if (partCost.isNotEmpty() && partName.isEmpty()) {
+                    partNameField.error = "Part name is required if cost is provided."
+                    isValid = false
+                } else if (partName.isNotEmpty() && partCost.isEmpty()) {
+                    costFields[index].error = "Cost is required if part name is provided."
+                    isValid = false
+                } else if (partName.isNotEmpty() && partCost.isNotEmpty()) {
+                    parts[partName] = partCost
+                }
+            }
+
+            if(!isValid) return@setOnClickListener
+
+            val imagePath = imageUri?.toString() ?: "android.resource://${requireContext().packageName}/drawable/pcdefault"
+
+            // Create a document in pcBuildDetails
+            val detailRefId = db.collection("pcBuildDetails").document().id
+            val detailData = mapOf(
+                "description" to buildDescription,
+                "parts" to parts,
+                "imagePath" to imagePath
+            )
+            db.collection("pcBuildDetails").document(detailRefId).set(detailData)
+                .addOnSuccessListener {
+                    // Create a document in pcBuilds
+                    val buildData = mapOf(
+                        "title" to buildName,
+                        "summary" to buildDescription,
+                        "author" to author,
+                        "detailref" to detailRefId,
+                        "timeMS" to System.currentTimeMillis()
+                    )
+                    db.collection("pcBuilds").add(buildData)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Build saved successfully.", Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.home_screen)
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("FirestoreError", "Error saving build summary", e)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("FirestoreError", "Error saving build details", e)
+                }
+        }
+
     }
 
     private fun updateTotalCost() {
