@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SavedContent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/profile_menu"
             app:navigationIcon="@drawable/back" />
+
         <Button
             android:id="@+id/saved_videos"
             android:layout_width="0dp"
@@ -33,7 +36,7 @@
             android:backgroundTint="@color/green"
             android:text="@string/saved_videos"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerViewYoutube"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewBuilds"
             app:layout_constraintEnd_toStartOf="@+id/build_inspo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
@@ -49,14 +52,14 @@
             android:backgroundTint="@color/green"
             android:text="@string/build_inspo"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerViewYoutube"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewBuilds"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/saved_videos"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintVertical_bias="0.792" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewYoutube"
+            android:id="@+id/recyclerViewBuilds"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"

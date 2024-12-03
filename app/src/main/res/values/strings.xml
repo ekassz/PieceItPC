@@ -25,6 +25,7 @@
     <string name="greeting_text">Welcome %1$s!</string>
     <string name="tutorial">PC Tutorial Highlights</string>>
     <string name="create_account">Create Account</string>
+    <string name="saved_videos">Saved Videos</string>
+    <string name="build_inspo">Build Inspo</string>
     <string name="build_highlights">PC Build Highlights</string>
-
 </resources>
