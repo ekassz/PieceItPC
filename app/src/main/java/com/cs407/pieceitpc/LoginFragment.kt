@@ -14,6 +14,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.MaterialToolbar
 import java.security.MessageDigest
 import com.google.firebase.auth.FirebaseAuth
 
@@ -74,6 +75,14 @@ class LoginFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp() // Navigate back
+        }
+
         //TODO: does this go here?
         auth = FirebaseAuth.getInstance()
 

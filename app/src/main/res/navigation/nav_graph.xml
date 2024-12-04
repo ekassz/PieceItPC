@@ -23,13 +23,17 @@
             android:id="@+id/savedContent"
             app:destination="@id/savedContent"
             />
+        <action
+            android:id="@+id/toBuildHighlights"
+            app:destination="@id/build_highlights"
+            />
     </fragment>
 
     <fragment
         android:id="@+id/build_highlights"
-        android:name="com.cs407.pieceitpc.PCTutorialHighlights"
+        android:name="com.cs407.pieceitpc.BuildHighlights"
         android:label="@string/build_highlights"
-        tools:layout="@layout/fragment_p_c_tutorial_highlights">
+        tools:layout="@layout/fragment_build_highlights">
         <action
             android:id="@+id/action_build_highlights_to_home_screen"
             app:destination="@id/home_screen" />
