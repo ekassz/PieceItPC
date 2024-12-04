@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/greenDark"
-            android:title="PieceItPC"
+            android:title="@string/app_name"
             android:titleTextColor="@android:color/white"
             app:contentInsetStart="15dp"
             app:contentInsetStartWithNavigation="15dp"
@@ -48,24 +48,51 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
+            android:id="@+id/build_author"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:text="xxxx@gmail.com"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pcImage" />
+
+        <TextView
+            android:id="@+id/build_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="30dp"
+            android:text="nice pc"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pcImage" />
+
+        <TextView
             android:id="@+id/buildDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
-            android:text="PC Build ~1K\n\nThis was my first PC build that I did for personal use. Bought 2 MSI monitors separately too to match resolution and response rate with AMD 7. Worked the first time I booted the operating system too!"
+            android:layout_marginTop="60dp"
+            android:text="PC Build ~1KThis was my first PC build that I did for personal use. Bought 2 MSI monitors separately too to match resolution and response rate with AMD 7. Worked the first time I booted the operating system too!"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/pcImage"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/pcImage" />
 
         <TextView
             android:id="@+id/partListHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Part List"
+            android:text="Parts List"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -92,35 +119,349 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="8dp">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="8dp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/part_case"
+                        android:textColor="@android:color/white"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/part_case"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                        android:textColor="@android:color/white"
                         android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white" />
+                        android:textStyle="" />
 
                     <TextView
+                        android:id="@+id/part_caseCost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="$148.00"
-                        android:textSize="12sp"
                         android:textColor="@android:color/white"
-                        android:layout_marginTop="4dp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_caseFans"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_caseFans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_caseFansCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_cpu"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_cpu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_cpuCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_cpuCooler"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_cpuCooler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_cpuCoolerCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_custom"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_customCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_memory"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_memory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_memoryCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_motherboard"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_motherboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_motherboardCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_powerSupply"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_powerSupply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_powerSupplyCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_storage"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_storage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_storageCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/part_videocard"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/part_videocard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="" />
+
+                <TextView
+                    android:id="@+id/part_videocardCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="$148.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
             </LinearLayout>
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
