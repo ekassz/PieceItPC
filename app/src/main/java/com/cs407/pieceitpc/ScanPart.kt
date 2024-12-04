@@ -1,5 +1,6 @@
 package com.cs407.pieceitpc
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
@@ -86,7 +87,7 @@ class ScanPart : Fragment() {
     }
 
     /*
-    fun launchCamera(view: View) {
+    fun launchCamera(view: View, context:Context) {
         val permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
         if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSIONS)
@@ -115,7 +116,9 @@ class ScanPart : Fragment() {
     }
 
 
+
      */
+
 }
 
 /*
