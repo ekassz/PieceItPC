@@ -6,10 +6,12 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Im
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -23,6 +25,7 @@ import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 class ScanPart : Fragment() {
     private lateinit var imageHolder: ImageView
     private lateinit var textOutput: TextView
+    private lateinit var scanButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +43,15 @@ class ScanPart : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageHolder = getView()?.findViewById(R.id.buildImage) as ImageView
-        textOutput = getView()?.findViewById(R.id.textOutput) as TextView
+        imageHolder = view.findViewById(R.id.buildImage)
+        textOutput = view.findViewById(R.id.textOutput)
+        scanButton = view.findViewById(R.id.scanButton)
         textOutput.showSoftInputOnFocus = false
         textOutput.isFocusable = false
 
+
+
+        scanButton.setOnClickListener { onLabel(view) }
     }
     //might not be right but starting here
     //findNavController().popBackStack()
@@ -65,8 +72,11 @@ class ScanPart : Fragment() {
             .addOnSuccessListener { labels ->
                 for (l in labels) {
                     toTextBox("Item", l.text)
+                    Log.i("Item", l.text)
                     toTextBox("Index", l.index)
+                    Log.i("Index", l.index.toString())
                     toTextBox("Confidence", l.confidence)
+                    Log.i("Confidence", l.confidence.toString())
                     toTextBox("Finished", "Object Labeling Complete\n--------\n")
                 }
             }

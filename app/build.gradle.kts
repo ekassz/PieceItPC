@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.camera.lifecycle)
+    implementation("com.google.mlkit:image-labeling:17.0.7")
     //implementation(libs.firebase.ml.vision)
     implementation(libs.vision.common)
     implementation(libs.image.labeling.common)

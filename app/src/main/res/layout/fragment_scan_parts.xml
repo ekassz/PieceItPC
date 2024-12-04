@@ -31,10 +31,9 @@
         app:srcCompat="@drawable/part" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/scanButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onLabel"
         android:text="Scan Your Part!" />
 
     <EditText
