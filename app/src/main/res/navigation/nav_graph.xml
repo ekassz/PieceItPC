@@ -27,6 +27,12 @@
             android:id="@+id/toBuildHighlights"
             app:destination="@id/build_highlights"
             />
+        <action
+            android:id="@+id/action_home_screen_to_PCTutorialHighlights"
+            app:destination="@id/PCTutorialHighlights" />
+        <action
+            android:id="@+id/action_home_screen_to_scan"
+            app:destination="@id/scan" />
     </fragment>
 
     <fragment
@@ -111,6 +117,18 @@
             app:destination="@id/savedContent"
             app:popUpTo="@id/savedContent"
             app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/PCTutorialHighlights"
+        android:name="com.cs407.pieceitpc.PCTutorialHighlights"
+        android:label="fragment_p_c_tutorial_highlights"
+        tools:layout="@layout/fragment_p_c_tutorial_highlights" >
+        <action
+            android:id="@+id/action_PCTutorialHighlights_to_savedContent"
+            app:destination="@id/savedContent" />
+        <action
+            android:id="@+id/action_PCTutorialHighlights_to_home_screen"
+            app:destination="@id/home_screen" />
     </fragment>
 
 

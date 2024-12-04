@@ -19,12 +19,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.ktx.firestore
-import java.util.UUID
-
 
 class PCNewBuild : Fragment() {
     private lateinit var pcImageView: ImageView
@@ -123,23 +119,63 @@ class PCNewBuild : Fragment() {
             val buildName = buildNameEditText.text.toString()
             val buildDescription = buildDescriptionEditText.text.toString()
             val totalCost = totalCostText.text.toString().toDouble()
-            val parts = mutableMapOf<String, String>()
             val currentUser = FirebaseAuth.getInstance().currentUser
             val author = currentUser?.email ?: "Anonymous"
             var isValid = true
 
+            val parts = mutableMapOf<String, Any?>()
             partNameFields.forEachIndexed { index, partNameField ->
                 val partName = partNameField.text.toString().trim()
                 val partCost = costFields[index].text.toString().trim()
 
-                if (partCost.isNotEmpty() && partName.isEmpty()) {
-                    partNameField.error = "Part name is required if cost is provided."
+                if (partName.isNotEmpty() || partCost.isNotEmpty()) {
+                    when (index) {
+                        0 -> {
+                            parts["cpu"] = partName
+                            parts["cpuCost"] = partCost
+                        }
+                        1 -> {
+                            parts["cpuCooler"] = partName
+                            parts["cpuCoolerCost"] = partCost
+                        }
+                        2 -> {
+                            parts["motherboard"] = partName
+                            parts["motherboardCost"] = partCost
+                        }
+                        3 -> {
+                            parts["memory"] = partName
+                            parts["memoryCost"] = partCost
+                        }
+                        4 -> {
+                            parts["storage"] = partName
+                            parts["storageCost"] = partCost
+                        }
+                        5 -> {
+                            parts["videocard"] = partName
+                            parts["videocardCost"] = partCost
+                        }
+                        6 -> {
+                            parts["case"] = partName
+                            parts["caseCost"] = partCost
+                        }
+                        7 -> {
+                            parts["powersupply"] = partName
+                            parts["powersupplyCost"] = partCost
+                        }
+                        8 -> {
+                            parts["casefans"] = partName
+                            parts["casefansCost"] = partCost
+                        }
+                        9 -> { parts["custom"] = partName
+                            parts["customCost"] = partCost
+                        }
+                    }
+                } else if (partCost.isNotEmpty() && partName.isEmpty()) {
+                    partNameField.error = "Part name is required if the cost is provided."
                     isValid = false
                 } else if (partName.isNotEmpty() && partCost.isEmpty()) {
                     costFields[index].error = "Cost is required if part name is provided."
                     isValid = false
-                } else if (partName.isNotEmpty() && partCost.isNotEmpty()) {
-                    parts[partName] = partCost
                 }
             }
 
@@ -151,18 +187,18 @@ class PCNewBuild : Fragment() {
             val detailRefId = db.collection("pcBuildDetails").document().id
             val detailData = mapOf(
                 "description" to buildDescription,
-                "parts" to parts,
-                "imagePath" to imagePath
+                "imagePath" to imagePath,
+                "parts" to parts
             )
             db.collection("pcBuildDetails").document(detailRefId).set(detailData)
                 .addOnSuccessListener {
                     // Create a document in pcBuilds
                     val buildData = mapOf(
-                        "title" to buildName,
-                        "summary" to buildDescription,
                         "author" to author,
                         "detailref" to detailRefId,
-                        "timeMS" to System.currentTimeMillis()
+                        "summary" to buildDescription,
+                        "timeMS" to System.currentTimeMillis(),
+                        "title" to buildName
                     )
                     db.collection("pcBuilds").add(buildData)
                         .addOnSuccessListener {
@@ -190,9 +226,6 @@ class PCNewBuild : Fragment() {
 
         totalCostText.text = String.format("%.2f", total)
     }
-        // Submit New PC Build
-
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

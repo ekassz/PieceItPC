@@ -1,6 +1,6 @@
 package com.cs407.pieceitpc
 
-import android.content.Intent
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -45,18 +44,17 @@ class CardAdapter(
 
         Log.d("CardAdapter", "Loading image for: ${currentBuild.title}, Path: ${currentBuild.imageResId}")
 
-
         //Load the Image
         Glide.with(homeScreen)
             .load(currentBuild.imageResId)
-            .placeholder(R.drawable.pcdefault) // Fallback during loading
-            .error(R.drawable.pcdefault) // Fallback if the image path is invalid
+            .placeholder(R.drawable.pcdefault)
+            .error(R.drawable.pcdefault)
             .into(holder.buildImage)
 
         // Set click listener for the card
         holder.itemView.setOnClickListener {
             viewModel.setBuildVal(currentBuild.id)
-            parent.findNavController().navigate(R.id.build_highlights)
+            parent.findNavController().navigate(R.id.toBuildHighlights)
 
         }
     }
