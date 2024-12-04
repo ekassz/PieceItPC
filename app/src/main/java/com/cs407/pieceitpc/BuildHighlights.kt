@@ -60,19 +60,25 @@ class BuildHighlights : Fragment() {
             findNavController().navigateUp()
         }
         val buildId = viewModel.getBuildVal()
+
         //build data from pcBuilds
         db.collection("pcBuilds").document(buildId).get().addOnSuccessListener {
             document ->
             if (document != null){
-                val title = document.getString("title") ?: "Untitled Build"
                 val summary = document.getString("summary") ?: "No description available."
                 val author = document.getString("author") ?: "Unknown"
                 val detailRef = document.getString("detailref")
+                val title = document.getString("title") ?: "Untitled Build"
+                val titleTextView = view.findViewById<TextView>(R.id.titleTextView) // Find the placeholder TextView
+                titleTextView.text = title // Set the title from the database
 
                 // Set basic build info
-                view?.findViewById<TextView>(R.id.cardTitle)?.text = title
                 view?.findViewById<TextView>(R.id.cardDescription)?.text = summary
-                view?.findViewById<TextView>(R.id.cardAuthor)?.text = "by $author"
+                view?.findViewById<TextView>(R.id.cardAuthor)?.text = "by: $author"
+
+                val authorEmailTextView = view.findViewById<TextView>(R.id.authorEmailTextView)
+                authorEmailTextView.text = "by: $author"
+
 
                 // fetch Detailed parts list from pcBuildDetails
                 if(!detailRef.isNullOrEmpty()){
@@ -90,7 +96,7 @@ class BuildHighlights : Fragment() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val description = document.getString("description") ?: "No description available."
-                    val title = document.getString("title") ?: "PC Build Highlight"
+                    val detailTitle = document.getString("title")
                     val parts = document.get("parts") as? Map<String, Any>
                     val imagePath = document.getString("imagePath") ?: "android.resource://${requireContext().packageName}/drawable/pcdefault"
 
@@ -104,10 +110,18 @@ class BuildHighlights : Fragment() {
                             .into(pcImageView)
                     }
 
-
                     view?.findViewById<TextView>(R.id.buildDescription)?.text = description
-                    view?.findViewById<TextView>(R.id.titleTextView)?.text = title
+                    //view?.findViewById<TextView>(R.id.titleTextView)?.text = title
 
+                    // Calculate the total cost
+                    var totalCost = 0.0
+                    parts?.forEach { (key, value) ->
+                        if (key.endsWith("Cost") && value is String) {
+                            totalCost += value.toDoubleOrNull() ?: 0.0
+                        }
+                    }
+                    val totalCostTextView = view?.findViewById<TextView>(R.id.totalCostValue)
+                    totalCostTextView?.text = String.format("$%.2f", totalCost)
 
                     // Populate parts list
                     val partsContainer = view?.findViewById<LinearLayout>(R.id.partListContainer)
@@ -127,7 +141,7 @@ class BuildHighlights : Fragment() {
                                 partView.findViewById<TextView>(R.id.partDetailTextView)
 
                             partNameView.text = partDetail // Display the part name
-                            partCostView.text = cost // Display the part cost
+                            partCostView.text = if (cost.isNotEmpty()) "$$cost" else cost
 
                             partsContainer?.addView(partView)
                         }

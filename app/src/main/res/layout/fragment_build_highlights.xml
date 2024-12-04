@@ -29,37 +29,50 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Title Placeholder"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:textColor="@android:color/black"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 
         <ImageView
             android:id="@+id/pcImage"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
-            android:background="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
         <TextView
             android:id="@+id/buildDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:text="PC Build ~1K\n\nThis was my first PC build that I did for personal use. Bought 2 MSI monitors separately too to match resolution and response rate with AMD 7. Worked the first time I booted the operating system too!"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/pcImage"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/pcImage" />
+
+        <TextView
+            android:id="@+id/authorEmailTextView"
+            android:layout_width="358dp"
+            android:layout_height="23dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Author Email Placeholder"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buildDescription" />
+
 
         <TextView
             android:id="@+id/partListHeader"
@@ -67,31 +80,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Part List"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
-            app:layout_constraintTop_toBottomOf="@id/buildDescription"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/authorEmailTextView" />
 
         <LinearLayout
             android:id="@+id/partListContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/green"
             android:orientation="vertical"
-            android:background="@color/greenDark"
             android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/partListHeader"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/partListHeader">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="50dp"
@@ -108,20 +121,47 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
+                        android:textColor="@android:color/white"
                         android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="$148.00"
-                        android:textSize="12sp"
                         android:textColor="@android:color/white"
-                        android:layout_marginTop="4dp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/totalCostLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="16dp"
+            android:text="Total Cost:"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/partListContainer" />
+
+        <TextView
+            android:id="@+id/totalCostValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:text="$0000.00"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/totalCostLabel"
+            app:layout_constraintTop_toBottomOf="@id/partListContainer" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

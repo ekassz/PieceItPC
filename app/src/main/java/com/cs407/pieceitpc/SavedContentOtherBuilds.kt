@@ -46,11 +46,7 @@ class SavedContentOtherBuilds : Fragment() {
         othersRV = view.findViewById(R.id.recyclerViewBuilds)
         othersRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-<<<<<<< HEAD
         //val sampleOther = getSampleOthers()
-=======
-        val sampleOther = getSampleOthers()
->>>>>>> b84131f001e55d6efb216fb61d7227dfef5e5caa
         //othersAdapt = CardAdapter(sampleOther)
         othersRV.adapter = othersAdapt
         return view

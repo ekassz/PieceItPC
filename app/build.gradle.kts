@@ -52,8 +52,7 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
-<<<<<<< HEAD
-=======
+
     implementation(libs.firebase.storage.ktx)
     implementation(libs.androidx.camera.lifecycle)
     implementation("com.google.mlkit:image-labeling:17.0.7")
@@ -61,7 +60,6 @@ dependencies {
     implementation(libs.vision.common)
     implementation(libs.image.labeling.common)
     implementation(libs.image.labeling.default.common)
->>>>>>> b84131f001e55d6efb216fb61d7227dfef5e5caa
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -46,11 +46,7 @@ class SavedContent : Fragment() {
         youtubeRV = view.findViewById(R.id.recyclerViewYoutube)
         youtubeRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-<<<<<<< HEAD
         //val sampleYT = getSampleYT()
-=======
-        val sampleYT = getSampleYT()
->>>>>>> b84131f001e55d6efb216fb61d7227dfef5e5caa
         //youtubeAdapt = CardAdapter(sampleYT)
         youtubeRV.adapter = youtubeAdapt
         return view
