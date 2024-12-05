@@ -63,6 +63,22 @@
         <action
             android:id="@+id/action_savedContent_to_home_screen"
             app:destination="@id/home_screen" />
+        <action
+            android:id="@+id/action_savedContent_buildInspo"
+            app:destination="@id/buildInspo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/buildInspo"
+        android:name="com.cs407.pieceitpc.SavedContentOtherBuilds"
+        android:label="@string/build_inspo"
+        tools:layout="@layout/fragment_saved_content_builds" >
+        <action
+            android:id="@+id/action_buildInspo_to_savedContent"
+            app:destination="@id/savedContent" />
+        <action
+            android:id="@+id/action_buildInspo_to_home_screen"
+            app:destination="@id/home_screen" />
     </fragment>
 
 
