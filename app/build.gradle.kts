@@ -71,7 +71,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:23.1.0")
 
 
-}
+
 
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))

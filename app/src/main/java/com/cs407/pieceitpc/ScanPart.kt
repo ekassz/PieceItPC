@@ -1,7 +1,10 @@
 package com.cs407.pieceitpc
 
 //import android.R
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,8 +14,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.annotations.Nullable
+import com.google.firebase.database.core.Context
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeler
 import com.google.mlkit.vision.label.ImageLabeling
@@ -27,6 +33,8 @@ class ScanPart : Fragment() {
     private var btnCapture: Button? = null
     private var imgCapture: ImageView? = null
     private val Image_Capture_Code: Int = 1
+    private val REQUEST_CAMERA_PERMISSIONS = 100
+    private val IMAGE_CAPTURE_CODE = 100
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +47,7 @@ class ScanPart : Fragment() {
     ): View? {
         //show back button
         // Inflate the layout for this fragment
+        launchCamera()
         val view: View = inflater.inflate(R.layout.fragment_scan_parts, container, false)
         imgCapture = view.findViewById<View>(R.id.buildImage) as ImageView
         btnCapture?.setOnClickListener(View.OnClickListener {
@@ -51,9 +60,9 @@ class ScanPart : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //imageHolder = view.findViewById(R.id.buildImage)
+        imageHolder = view.findViewById(R.id.buildImage)
         textOutput = view.findViewById(R.id.textOutput)
-        //scanButton = view.findViewById(R.id.scanButton)
+        scanButton = view.findViewById(R.id.scanButton)
         textOutput.showSoftInputOnFocus = false
         textOutput.isFocusable = false
         scanButton = view.findViewById<View>(R.id.scanButton) as Button
@@ -79,7 +88,7 @@ class ScanPart : Fragment() {
         labeler.process(image)
             .addOnSuccessListener { labels ->
                 for (l in labels) {
-                    toTextBox("Here's what I found: ", l.text)
+                    toTextBox("Here's what I found", l.text)
                 }
             }
             .addOnFailureListener {
@@ -87,14 +96,13 @@ class ScanPart : Fragment() {
             }
     }
 
-    /*
-    fun launchCamera(view: View, context:Context) {
-        val permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+    private fun launchCamera() {
+        val permission = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
         if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSIONS)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSIONS)
         } else {
-            val cIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(cIntent, IMAGE_CAPTURE_CODE)
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, IMAGE_CAPTURE_CODE)
         }
     }
 
@@ -116,10 +124,5 @@ class ScanPart : Fragment() {
         }
     }
 
-
-
-
-
-     */
 
 }

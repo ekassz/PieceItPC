@@ -29,6 +29,8 @@ data class video(
 //    )
 //}
 
+/*
+// real version
 fun getSampleYT(): List<CardItem> {
     return listOf(
         CardItem(1, R.drawable.placeholder, "Cool PC Video", "This build is optimized for 4K gaming.", "User123"),
@@ -46,6 +48,29 @@ fun getSampleOthers(): List<CardItem> {
         CardItem(4, R.drawable.placeholder, "Other User 4", "Maximized RGB lighting for aesthetics.", "RGB_Fanatic")
     )
 }
+
+
+ */
+
+// Ellie's copy-- for some reason it's not letting me run without changing this
+fun getSampleYT(): List<CardItem> {
+    return listOf(
+        CardItem("1", "R.drawable.placeholder", "Cool PC Video", "This build is optimized for 4K gaming.", "User123"),
+        CardItem("2", "R.drawable.placeholder", "Cool PC Video", "A solid budget build for entry-level gaming.", "PCEnthusiast"),
+        CardItem("3", "R.drawable.placeholder", "Cool PC Video", "Perfect for video editing and rendering tasks.", "ProBuilder"),
+        CardItem("4", "R.drawable.placeholder", "Decent PC Video", "Maximized RGB lighting for aesthetics.", "RGB_Fanatic")
+    )
+}
+
+fun getSampleOthers(): List<CardItem> {
+    return listOf(
+        CardItem("1", "R.drawable.placeholder", "Other User 1", "This build is optimized for 4K gaming.", "User123"),
+        CardItem("2", "R.drawable.placeholder", "Other User 2", "A solid budget build for entry-level gaming.", "PCEnthusiast"),
+        CardItem("3", "R.drawable.placeholder", "Other User 3", "Perfect for video editing and rendering tasks.", "ProBuilder"),
+        CardItem("4", "R.drawable.placeholder", "Other User 4", "Maximized RGB lighting for aesthetics.", "RGB_Fanatic")
+    )
+}
+
 
 /**
  * fun getSampleYT(): List<CardItem> {
