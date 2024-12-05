@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.*
 import android.widget.Button
@@ -17,6 +18,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import java.security.MessageDigest
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 
 class LoginFragment(
     private val injectedUserViewModel: UserViewModel? = null // For testing only
@@ -96,64 +99,48 @@ class LoginFragment(
 
         // Set the login button click action
         loginButton.setOnClickListener {
+            val enteredUserName = usernameEditText.text.toString().trim()
+            val enteredPass = passwordEditText.text.toString().trim()
 
-            // TODO: Get the entered username and password from EditText fields
-            val enteredUserName = usernameEditText.text.toString()
-
-            val enteredPass = passwordEditText.text.toString()
-            /**
-            if (enteredPass == "" || enteredUserName == "") {
-            errorTextView.visibility = View.VISIBLE
-            } else {
-            viewLifecycleOwner.lifecycleScope.launch {
-            val success = withContext(Dispatchers.IO) {
-            getUserPasswd(enteredUserName, enteredPass)
+            // Check validity of user input
+            if (enteredUserName.isEmpty() || enteredPass.isEmpty()) {
+                errorTextView.text = "Email and password cannot be empty."
+                errorTextView.visibility = View.VISIBLE
+                return@setOnClickListener
             }
 
-            if (success) {
-            // TODO: Set the logged-in user in the ViewModel (store user info) (placeholder)
-            userViewModel.setUser(
-            UserState(
-            1
-            )
-            ) // You will implement this in UserViewModel
-
-            // TODO: Navigate to another fragment after successful login
-            findNavController().navigate(R.id.action_loginFragment_to_noteListFragment) // Example navigation action
-
-            } else {
-            // TODO: Show an error message if either username or password is empty
-
-
-            errorTextView.visibility = View.VISIBLE
+            if (!Patterns.EMAIL_ADDRESS.matcher(enteredUserName).matches()) {
+                errorTextView.text = "Please enter a valid email address."
+                errorTextView.visibility = View.VISIBLE
+                return@setOnClickListener
             }
-            }
-            }
-             **/
-            //TODO: check validity of user input for email and password
-            if (enteredPass.isNotEmpty() && enteredUserName.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(
-                    enteredUserName
-                ).matches() && enteredPass.isNotEmpty()
-            ) {
-                auth.signInWithEmailAndPassword(enteredUserName, enteredPass)
-                    .addOnCompleteListener { task ->
-                        //found user and password match
-                        if (task.isSuccessful) {
-                            errorTextView.text = "Sign-in successful!"
-                            Toast.makeText(
-                                requireContext(),
-                                "Welcome back, let's get building!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            //send user to home screen
+
+            // Attempt Firebase authentication
+            auth.signInWithEmailAndPassword(enteredUserName, enteredPass)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        if (user != null) {
+                            Log.d("Login", "User ID: ${user.uid}, Email: ${user.email}")
+                            Toast.makeText(requireContext(), "Welcome back, ${user.email}!", Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.home_screen)
                         } else {
-                            //user found but password does not match
-                            errorTextView.text = "Sign-in failed: ${task.exception?.message}"
+                            Log.e("LoginError", "FirebaseAuth currentUser is null after successful sign-in.")
+                            errorTextView.text = "Unexpected error occurred. Please try again."
+                            errorTextView.visibility = View.VISIBLE
                         }
+                    } else {
+                        val exceptionMessage = when (task.exception) {
+                            is FirebaseAuthInvalidCredentialsException -> "Invalid password. Please try again."
+                            is FirebaseAuthInvalidUserException -> "No account found with this email."
+                            else -> task.exception?.message ?: "Authentication failed."
+                        }
+                        errorTextView.text = exceptionMessage
+                        errorTextView.visibility = View.VISIBLE
                     }
-            }
+                }
         }
+
     }
 
 
