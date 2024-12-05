@@ -6,10 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class CardAdapter(private val buildList: List<CardItem>) :
+
+class CardAdapter(private val buildList: List<CardItem>, homeScreen : Fragment, viewModel: UserViewModel) :
     RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
+        val parent = homeScreen
+        val viewModel = viewModel
+
 
     inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val buildImage: ImageView = itemView.findViewById(R.id.cardImage)
@@ -33,14 +40,17 @@ class CardAdapter(private val buildList: List<CardItem>) :
 
         // Set click listener for the card
         holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, ScanPart::class.java).apply {
-                putExtra("BUILD_TITLE", currentBuild.title)
-                putExtra("BUILD_DESCRIPTION", currentBuild.description)
-                putExtra("BUILD_AUTHOR", currentBuild.author)
-                putExtra("BUILD_IMAGE", currentBuild.imageResId)
-            }
-            context.startActivity(intent)
+//            val context = holder.itemView.context
+//            val intent = Intent(context, ScanPart::class.java).apply {
+//                putExtra("BUILD_TITLE", currentBuild.title)
+//                putExtra("BUILD_DESCRIPTION", currentBuild.description)
+//                putExtra("BUILD_AUTHOR", currentBuild.author)
+//                putExtra("BUILD_IMAGE", currentBuild.imageResId)
+//            }
+//            context.startActivity(intent)
+            viewModel.setBuildVal(currentBuild.id)
+            parent.findNavController().navigate(R.id.build_highlights)
+
         }
     }
 
