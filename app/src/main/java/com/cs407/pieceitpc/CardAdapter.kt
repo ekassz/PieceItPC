@@ -13,11 +13,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 
+
+class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreenFragment, viewModel: UserViewModel) :
+    RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
+        val parent : HomeScreenFragment = homeScreen
+
 class CardAdapter(
     private val buildList: List<CardItem>,
     private val homeScreen : Fragment,
     viewModel: UserViewModel) : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
         val parent = homeScreen
+
         val viewModel = viewModel
 
 
@@ -37,10 +43,17 @@ class CardAdapter(
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentBuild = buildList[position]
 
+        holder.buildImage.setImageResource(currentBuild.imageResId.toInt())
+
+
+
 
         holder.buildTitle.text = currentBuild.title
         holder.buildDescription.text = currentBuild.description
         holder.buildAuthor.text = "by ${currentBuild.author}"
+
+
+
 
         Log.d("CardAdapter", "Loading image for: ${currentBuild.title}, Path: ${currentBuild.imageResId}")
 
@@ -52,10 +65,14 @@ class CardAdapter(
             .into(holder.buildImage)
 
         // Set click listener for the card
+
         holder.itemView.setOnClickListener {
             viewModel.setBuildVal(currentBuild.id)
             parent.findNavController().navigate(R.id.toBuildHighlights)
 
+        }
+        holder.itemView.setOnLongClickListener {
+            parent.addToSaveContent(currentBuild.id)
         }
     }
 
