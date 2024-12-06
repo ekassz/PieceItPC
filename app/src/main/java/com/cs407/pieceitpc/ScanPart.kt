@@ -39,6 +39,8 @@ class ScanPart : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkPermissions();
+
     }
 
     override fun onCreateView(
@@ -47,7 +49,7 @@ class ScanPart : Fragment() {
     ): View? {
         //show back button
         // Inflate the layout for this fragment
-        launchCamera()
+//        launchCamera()
         val view: View = inflater.inflate(R.layout.fragment_scan_parts, container, false)
         imgCapture = view.findViewById<View>(R.id.buildImage) as ImageView
         btnCapture?.setOnClickListener(View.OnClickListener {
@@ -96,22 +98,29 @@ class ScanPart : Fragment() {
             }
     }
 
-    private fun launchCamera() {
+    private fun checkPermissions() {
         val permission = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
         if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSIONS)
+            requestPermissions(arrayOf(android.Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSIONS)
         } else {
+            launchCamera()
+        }
+    }
+
+    private fun launchCamera() {
+         //else {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, IMAGE_CAPTURE_CODE)
-        }
+        //}
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CAMERA_PERMISSIONS) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val cIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(cIntent, IMAGE_CAPTURE_CODE)
+            launchCamera()
+            //val cIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                //startActivityForResult(cIntent, IMAGE_CAPTURE_CODE)
             }
         }
     }
