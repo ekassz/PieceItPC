@@ -182,25 +182,25 @@ class BuildHighlights : Fragment() {
 
         descriptiontv?.text = description
         casetv?.text = case
-        casetvCost?.text = "Cost: " + caseCost
+        casetvCost?.text = "Cost:$" + caseCost
         casefantv?.text = caseFans
-        casefantvCost?.text = "Cost: " + caseFansCost
+        casefantvCost?.text = "Cost:$" + caseFansCost
         cputv?.text = cpu
-        cputvCost?.text = "Cost: " + cpuCost
+        cputvCost?.text = "Cost:$ " + cpuCost
         cpuCoolertv?.text = cpuCooler
-        cpuCoolertvCost?.text = "Cost: " + cpuCoolerCost
+        cpuCoolertvCost?.text = "Cost:$ " + cpuCoolerCost
         customtv?.text = custom
-        customtvCost?.text = "Cost: " + customCost
+        customtvCost?.text = "Cost:$ " + customCost
         memorytv?.text = memory
-        memorytvCost?.text = "Cost: " + memoryCost
+        memorytvCost?.text = "Cost:$" + memoryCost
         motherboardtv?.text = motherboard
-        motherboardtvCost?.text = "Cost: " + motherboardCost
+        motherboardtvCost?.text = "Cost:$" + motherboardCost
         powersupplytv?.text = powersupply
-        powersupplytvCost?.text = "Cost: " + powersupplyCost
+        powersupplytvCost?.text = "Cost:$" + powersupplyCost
         storagetv?.text = storage
-        storagetvCost?.text = "Cost: " + storageCost
+        storagetvCost?.text = "Cost:$" + storageCost
         videocardv?.text = videocard
-        videocardvCost?.text = "Cost: " + videocardCost
+        videocardvCost?.text = "Cost:$" + videocardCost
 
         var totalCost = 0.0
         parts.forEach { (key, value) ->
