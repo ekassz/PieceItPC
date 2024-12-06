@@ -16,15 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/greenDark"
-
             android:title="@string/app_name"
-
-
             android:titleTextColor="@android:color/white"
             app:contentInsetStart="15dp"
             app:contentInsetStartWithNavigation="15dp"
-            app:menu="@menu/profile_menu"
-            app:navigationIcon="@drawable/back"
+            app:navigationIcon="@drawable/small_app_icon"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -32,24 +28,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Title Placeholder"
-            android:textColor="@android:color/black"
-            android:textSize="25sp"
+            android:text="@string/build_highlights"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/pcImage"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="16dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/build_author"
@@ -83,7 +79,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-
             android:layout_marginTop="60dp"
             android:text="PC Build ~1KThis was my first PC build that I did for personal use. Bought 2 MSI monitors separately too to match resolution and response rate with AMD 7. Worked the first time I booted the operating system too!"
             android:textColor="@android:color/black"
@@ -92,64 +87,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pcImage" />
 
-            android:layout_marginTop="16dp"
-            android:text="PC Build ~1K\n\nThis was my first PC build that I did for personal use. Bought 2 MSI monitors separately too to match resolution and response rate with AMD 7. Worked the first time I booted the operating system too!"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pcImage" />
-
-        <TextView
-            android:id="@+id/authorEmailTextView"
-            android:layout_width="358dp"
-            android:layout_height="23dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Author Email Placeholder"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buildDescription" />
-
-
-
         <TextView
             android:id="@+id/partListHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-
             android:text="Parts List"
-
-            android:text="Part List"
-            android:textColor="@android:color/black"
-
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/buildDescription"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/authorEmailTextView" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
             android:id="@+id/partListContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-            android:background="@color/green"
+            android:layout_marginHorizontal="16dp"
             android:orientation="vertical"
+            android:background="@color/greenDark"
             android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/partListHeader"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/partListHeader">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
 
 
                 <LinearLayout
@@ -175,11 +143,7 @@
                         android:text="AMD Ryzen 7 5800X 3.8 GHz 8-Core"
                         android:textColor="@android:color/white"
                         android:textSize="14sp"
-
                         android:textStyle="" />
-
-                        android:textStyle="bold" />
-
 
                     <TextView
                         android:id="@+id/part_caseCost"
@@ -192,7 +156,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="353dp"
@@ -518,34 +481,5 @@
 
             </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/totalCostLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="16dp"
-            android:text="Total Cost:"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/partListContainer" />
-
-        <TextView
-            android:id="@+id/totalCostValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="16dp"
-            android:text="$0000.00"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/totalCostLabel"
-            app:layout_constraintTop_toBottomOf="@id/partListContainer" />
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
