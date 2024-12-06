@@ -202,6 +202,7 @@ class BuildHighlights : Fragment() {
         videocardv?.text = videocard
         videocardvCost?.text = "Cost: $" + videocardCost
 
+
         var totalCost = 0.0
         parts.forEach { (key, value) ->
             if (key.endsWith("Cost") && value is String) {
