@@ -8,21 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.bumptech.glide.Glide
-
+import com.google.android.material.appbar.MaterialToolbar
 
 
 class BuildHighlights : Fragment() {
     val viewModel: UserViewModel by activityViewModels()
+    val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val db = Firebase.firestore
+
 
         val docRef = db.collection("pcBuilds")
             .document(viewModel.getBuildVal())
@@ -47,8 +50,35 @@ class BuildHighlights : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //Show back button
+        setupBackNavigation()
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_build_highlights, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        // Set up the back button functionality
+        toolbar.setNavigationOnClickListener {
+            // Navigate back to the previous fragment
+            findNavController().navigateUp()
+        }
+        val buildId = viewModel.getBuildVal()
+
+        //build data from pcBuilds
+        db.collection("pcBuilds").document(buildId).get().addOnSuccessListener {
+                document ->
+            if (document != null){
+                val title = document.getString("title") ?: "Untitled Build"
+                val titleTextView = view.findViewById<TextView>(R.id.titleTextView) // Find the placeholder TextView
+                titleTextView.text = title // Set the title from the database
+
+            }
+        }
+            .addOnFailureListener{ e ->
+                Log.e("FirestoreError", "Error fetching build data", e)
+            }
     }
 
     private fun getBuildDetails(database : FirebaseFirestore, detailRef: String) {
@@ -106,7 +136,6 @@ class BuildHighlights : Fragment() {
             // Set a default image if imagePath is null or empty
             pcImageView?.setImageResource(R.drawable.pcdefault)
         }
-
         val description = data["description"] as String? ?: "N/A"
         val case = parts["case"] as String? ?: "N/A"
         val caseCost = parts["caseCost"] as String? ?: "N/A"
@@ -182,6 +211,15 @@ class BuildHighlights : Fragment() {
         val totalCostTextView = view?.findViewById<TextView>(R.id.part_totalCost)
         totalCostTextView?.text = "Total Cost: " + String.format("$%.2f", totalCost)
 
+    }
+
+    private fun setupBackNavigation() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 }

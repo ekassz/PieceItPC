@@ -16,11 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/greenDark"
-            android:title="@string/app_name"
             android:titleTextColor="@android:color/white"
             app:contentInsetStart="15dp"
             app:contentInsetStartWithNavigation="15dp"
-            app:navigationIcon="@drawable/small_app_icon"
+            app:menu="@menu/profile_menu"
+            app:navigationIcon="@drawable/back"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -38,14 +38,13 @@
 
         <ImageView
             android:id="@+id/pcImage"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="378dp"
+            android:layout_height="223dp"
             android:layout_marginHorizontal="16dp"
-            android:background="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
         <TextView
             android:id="@+id/build_author"

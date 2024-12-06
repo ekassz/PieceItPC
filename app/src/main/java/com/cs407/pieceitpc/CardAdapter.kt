@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 
-class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreenFragment, viewModel: UserViewModel) :
+class CardAdapter(private val buildList: List<CardItem>,
+                  private val homeScreen : HomeScreenFragment, viewModel: UserViewModel) :
     RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
         val parent : HomeScreenFragment = homeScreen
         val viewModel = viewModel
@@ -33,11 +35,18 @@ class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreen
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentBuild = buildList[position]
-        holder.buildImage.setImageResource(currentBuild.imageResId.toInt())
+        //holder.buildImage.setImageResource(currentBuild.imageResId.)
         holder.buildTitle.text = currentBuild.title
         holder.buildDescription.text = currentBuild.description
         holder.buildAuthor.text = "by ${currentBuild.author}"
 
+
+        //Load the Image
+        Glide.with(homeScreen)
+            .load(currentBuild.imageResId)
+            .placeholder(R.drawable.pcdefault)
+            .error(R.drawable.pcdefault)
+            .into(holder.buildImage)
 
         holder.itemView.setOnClickListener {
             viewModel.setBuildVal(currentBuild.id)

@@ -22,6 +22,9 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import androidx.fragment.app.viewModels
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.firestore.DocumentSnapshot
 
 
 class HomeScreenFragment : Fragment() {
@@ -65,26 +68,48 @@ class HomeScreenFragment : Fragment() {
             .orderBy("timeMS", Query.Direction.DESCENDING)
             .limit(3)
             .get()
-            .addOnSuccessListener { document ->
+            .addOnSuccessListener { documents ->
                 val builds = mutableListOf<CardItem>()
-                for (doc in document) {
+                val tasks = mutableListOf<Task<DocumentSnapshot>>()
+                for (doc in documents) {
                     val data = doc.data
-                    builds.add(CardItem(
-                        id = doc.id,
-                        imageResId = R.drawable.placeholder.toString(),
-                        title = data["title"] as? String ?: "Untitled",
-                        description = data["summary"] as? String ?: "No description",
-                        author = data["author"] as? String ?: "Unknown"
-                    ))
+                    val detailRef = data["detailref"] as? String
+                    if (detailRef != null) {
+                        // Fetch `pcBuildDetails` document
+                        val task = db.collection("pcBuildDetails").document(detailRef).get()
+                        tasks.add(task)
+
+                        task
+                            .addOnSuccessListener { detailDoc ->
+                                val imagePath = detailDoc.getString("imagePath")
+                                    ?: "android.resource://${requireContext().packageName}/drawable/pcdefault"
+                                builds.add(
+                                    CardItem(
+                                        id = doc.id,
+                                        imageResId = imagePath,
+                                        title = data["title"] as? String ?: "Untitled",
+                                        description = data["summary"] as? String
+                                            ?: "No description",
+                                        author = data["author"] as? String ?: "Unknown"
+                                    )
+                                )
+                            }.addOnFailureListener { exception ->
+                                Log.e("FIREBASERROR", "Error getting pc details: $exception")
+                            }
+                    }
                 }
-                cardAdapter = CardAdapter(builds, this, viewModel)
-                cardRecyclerView.adapter = cardAdapter
+                // Wait for all tasks to complete
+                Tasks.whenAllComplete(tasks).addOnCompleteListener {
+                    cardAdapter = CardAdapter(builds, this, viewModel)
+                    cardRecyclerView.adapter = cardAdapter
+                }
             }
             .addOnFailureListener { exception ->
-                Log.e("FIREBASERROR", "error getting pc builds " + exception)
+                Log.e("FIREBASERROR", "Error getting pc builds: $exception")
             }
 
-        //Sample Hard-Coded Card Item Data
+
+                //Sample Hard-Coded Card Item Data
 //        val sampleBuilds = getSampleBuilds()
 
 
@@ -98,7 +123,7 @@ class HomeScreenFragment : Fragment() {
         }
 
         buildTuts.setOnClickListener {
-            findNavController().navigate(R.id.homeScreen_to_buildHighlights)
+            findNavController().navigate(R.id.action_home_screen_to_PCTutorialHighlights)
         }
         savedContent.setOnClickListener{
             findNavController().navigate(R.id.savedContent)
