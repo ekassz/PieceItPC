@@ -12,9 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
 
-class CardAdapter(private val buildList: List<CardItem>, homeScreen : Fragment, viewModel: UserViewModel) :
+class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreenFragment, viewModel: UserViewModel) :
     RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
-        val parent = homeScreen
+        val parent : HomeScreenFragment = homeScreen
         val viewModel = viewModel
 
 
@@ -33,24 +33,19 @@ class CardAdapter(private val buildList: List<CardItem>, homeScreen : Fragment, 
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentBuild = buildList[position]
-        holder.buildImage.setImageResource(currentBuild.imageResId)
+        holder.buildImage.setImageResource(currentBuild.imageResId.toInt())
         holder.buildTitle.text = currentBuild.title
         holder.buildDescription.text = currentBuild.description
         holder.buildAuthor.text = "by ${currentBuild.author}"
 
-        // Set click listener for the card
-        holder.itemView.setOnClickListener {
-//            val context = holder.itemView.context
-//            val intent = Intent(context, ScanPart::class.java).apply {
-//                putExtra("BUILD_TITLE", currentBuild.title)
-//                putExtra("BUILD_DESCRIPTION", currentBuild.description)
-//                putExtra("BUILD_AUTHOR", currentBuild.author)
-//                putExtra("BUILD_IMAGE", currentBuild.imageResId)
-//            }
-//            context.startActivity(intent)
-            viewModel.setBuildVal(currentBuild.id)
-            parent.findNavController().navigate(R.id.build_highlights)
 
+        holder.itemView.setOnClickListener {
+            viewModel.setBuildVal(currentBuild.id)
+            parent.findNavController().navigate(R.id.toBuildHighlights)
+
+        }
+        holder.itemView.setOnLongClickListener {
+            parent.addToSaveContent(currentBuild.id)
         }
     }
 

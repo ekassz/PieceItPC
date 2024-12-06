@@ -51,6 +51,8 @@
     <string name = "part_storageCost">Storage Cost: </string>
     <string name = "part_videocard">Videocard: </string>
     <string name = "part_videocardCost">Videocard Cost: </string>
+    <string name = "part_totalCost">Total Cost: </string>
+
 
 
 

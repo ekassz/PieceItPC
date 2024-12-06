@@ -6,15 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.sql.Types.NULL
+import com.bumptech.glide.Glide
+
 
 
 class BuildHighlights : Fragment() {
@@ -34,7 +33,6 @@ class BuildHighlights : Fragment() {
                     val buildData = document.data
                     if (buildData != null) {
                         val detailRef = buildData["detailref"] as String?
-
                         getBuildNoParts(buildData)
                         if (!detailRef.isNullOrEmpty()) {
                             getBuildDetails(db,detailRef)
@@ -43,7 +41,6 @@ class BuildHighlights : Fragment() {
                     }
                 }
             }
-
     }
 
     override fun onCreateView(
@@ -63,7 +60,9 @@ class BuildHighlights : Fragment() {
                 if (document != null) {
                     val detailsData = document.data
                     if (detailsData != null) {
-                        getBuildDetails(detailsData)                    }
+                        getBuildDetails(detailsData)
+
+                    }
                 }
                 else {
                     Log.e("ERROR", "details doc problem")
@@ -91,7 +90,22 @@ class BuildHighlights : Fragment() {
         val view = this.view
         val parts = data["parts"] as? Map<String, Any> ?: emptyMap()
 
+        val imagePath = data["imagePath"] as? String
+        val pcImageView = view?.findViewById<ImageView>(R.id.pcImage)
 
+        if (!imagePath.isNullOrEmpty()) {
+            // Use Glide to load the image into the ImageView
+            pcImageView?.let {
+                Glide.with(this)
+                    .load(imagePath)
+                    .placeholder(R.drawable.pcdefault)
+                    .error(R.drawable.pcdefault)
+                    .into(it)
+            }
+        } else {
+            // Set a default image if imagePath is null or empty
+            pcImageView?.setImageResource(R.drawable.pcdefault)
+        }
 
         val description = data["description"] as String? ?: "N/A"
         val case = parts["case"] as String? ?: "N/A"
@@ -139,25 +153,34 @@ class BuildHighlights : Fragment() {
 
         descriptiontv?.text = description
         casetv?.text = case
-        casetvCost?.text = caseCost
+        casetvCost?.text = "Cost: " + caseCost
         casefantv?.text = caseFans
-        casefantvCost?.text = caseFansCost
+        casefantvCost?.text = "Cost: " + caseFansCost
         cputv?.text = cpu
-        cputvCost?.text = cpuCost
+        cputvCost?.text = "Cost: " + cpuCost
         cpuCoolertv?.text = cpuCooler
-        cpuCoolertvCost?.text = cpuCoolerCost
+        cpuCoolertvCost?.text = "Cost: " + cpuCoolerCost
         customtv?.text = custom
-        customtvCost?.text = customCost
+        customtvCost?.text = "Cost: " + customCost
         memorytv?.text = memory
-        memorytvCost?.text = memoryCost
+        memorytvCost?.text = "Cost: " + memoryCost
         motherboardtv?.text = motherboard
-        motherboardtvCost?.text = motherboardCost
+        motherboardtvCost?.text = "Cost: " + motherboardCost
         powersupplytv?.text = powersupply
-        powersupplytvCost?.text = powersupplyCost
+        powersupplytvCost?.text = "Cost: " + powersupplyCost
         storagetv?.text = storage
-        storagetvCost?.text = storageCost
+        storagetvCost?.text = "Cost: " + storageCost
         videocardv?.text = videocard
-        videocardvCost?.text = videocardCost
+        videocardvCost?.text = "Cost: " + videocardCost
+
+        var totalCost = 0.0
+        parts.forEach { (key, value) ->
+            if (key.endsWith("Cost") && value is String) {
+                totalCost += value.toDoubleOrNull() ?: 0.0
+            }
+        }
+        val totalCostTextView = view?.findViewById<TextView>(R.id.part_totalCost)
+        totalCostTextView?.text = "Total Cost: " + String.format("$%.2f", totalCost)
 
     }
 

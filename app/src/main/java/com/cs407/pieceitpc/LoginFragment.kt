@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
@@ -28,6 +29,12 @@ class LoginFragment(
     private lateinit var errorTextView: TextView
 
     private lateinit var userViewModel: UserViewModel
+
+    //anisha
+    private val viewModel2: UserViewModel by activityViewModels()
+
+
+
 
     private lateinit var userPasswdKV: SharedPreferences
     //private lateinit var noteDB: NoteDatabase
@@ -147,6 +154,7 @@ class LoginFragment(
                             ).show()
                             //send user to home screen
                             findNavController().navigate(R.id.home_screen)
+                            viewModel2.setLoginUser(enteredUserName)
                         } else {
                             //user found but password does not match
                             errorTextView.text = "Sign-in failed: ${task.exception?.message}"
