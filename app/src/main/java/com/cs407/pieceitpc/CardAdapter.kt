@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -32,6 +33,7 @@ class CardAdapter(
         val buildTitle: TextView = itemView.findViewById(R.id.cardTitle)
         val buildDescription: TextView = itemView.findViewById(R.id.cardDescription)
         val buildAuthor: TextView = itemView.findViewById(R.id.cardAuthor)
+        val buildSavedButton: Button = itemView.findViewById(R.id.save_build_button)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
@@ -53,6 +55,10 @@ class CardAdapter(
         holder.buildAuthor.text = "by ${currentBuild.author}"
 
 
+        holder.buildSavedButton.setOnClickListener{
+            viewModel.setBuildVal(currentBuild.id)
+            parent.findNavController().navigate(R.id.toBuildHighlights)
+        }
 
 
         Log.d("CardAdapter", "Loading image for: ${currentBuild.title}, Path: ${currentBuild.imageResId}")

@@ -29,6 +29,8 @@ data class video(
 //    )
 //}
 
+/**
+
 
 //fun getSampleYT(): List<CardItem> {
 //    return listOf(
@@ -47,6 +49,7 @@ data class video(
 //        CardItem("4", R.drawable.placeholder, "RGB Showoff", "Maximized RGB lighting for aesthetics.", "RGB_Fanatic")
 //    )
 //}
+
 
 fun getSampleYT(): List<CardItem> {
     return listOf(
@@ -86,5 +89,3 @@ fun getSampleOthers(): List<CardItem> {
  *     )
  * }
  */
-
-
