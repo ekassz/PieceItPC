@@ -15,9 +15,6 @@ import com.bumptech.glide.Glide
 
 
 
-class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreenFragment, viewModel: UserViewModel) :
-    RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
-        val parent : HomeScreenFragment = homeScreen
 
 class CardAdapter(
     private val buildList: List<CardItem>,
@@ -77,12 +74,14 @@ class CardAdapter(
             parent.findNavController().navigate(R.id.toBuildHighlights)
 
         }
+
         holder.itemView.setOnLongClickListener {
-            parent.addToSaveContent(currentBuild.id)
+            parent.(currentBuild.id)
         }
     }
 
 
     override fun getItemCount() = buildList.size
 }
+
 
