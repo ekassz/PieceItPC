@@ -13,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import com.google.firebase.firestore.FirebaseFirestore
 
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -24,7 +23,6 @@ import com.google.firebase.firestore.Query
 
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.bumptech.glide.Glide
 
 
 
