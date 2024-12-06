@@ -30,6 +30,9 @@
     <string name="saved_videos">Saved Videos</string>
     <string name="build_inspo">Build Inspo</string>
     <string name="build_highlights">PC Build Highlights</string>
+
+    <string name="save_build_text">save build</string>
+
     <string name = "parts_list">Part List</string>
     <string name = "part_case">Case: </string>
     <string name = "part_caseCost">Case Cost: </string>
@@ -52,9 +55,6 @@
     <string name = "part_videocard">Videocard: </string>
     <string name = "part_videocardCost">Videocard Cost: </string>
     <string name = "part_totalCost">Total Cost: </string>
-
-
-
 
 
 

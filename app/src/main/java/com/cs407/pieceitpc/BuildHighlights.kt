@@ -184,8 +184,4 @@ class BuildHighlights : Fragment() {
 
     }
 
-
-
-
-
 }
