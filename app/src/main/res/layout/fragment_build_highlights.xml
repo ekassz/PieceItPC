@@ -83,7 +83,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-
             android:layout_marginTop="60dp"
             android:text="PC Build ~1KThis was my first PC build that I did for personal use. Bought 2 MSI monitors separately too to match resolution and response rate with AMD 7. Worked the first time I booted the operating system too!"
             android:textColor="@android:color/black"
@@ -92,6 +91,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pcImage" />
 
+        <TextView
+            android:id="@+id/partListHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="PC Build ~1K\n\nThis was my first PC build that I did for personal use. Bought 2 MSI monitors separately too to match resolution and response rate with AMD 7. Worked the first time I booted the operating system too!"
             android:textColor="@android:color/black"
@@ -113,24 +116,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buildDescription" />
 
-
-
-        <TextView
-            android:id="@+id/partListHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-
-            android:text="Parts List"
-
-            android:text="Part List"
-            android:textColor="@android:color/black"
-
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/authorEmailTextView" />
 
         <LinearLayout
             android:id="@+id/partListContainer"
@@ -177,8 +162,6 @@
                         android:textSize="14sp"
 
                         android:textStyle="" />
-
-                        android:textStyle="bold" />
 
 
                     <TextView
@@ -512,8 +495,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/part_totalCost"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+                    android:textSize="17sp" />
 
 
             </LinearLayout>
@@ -544,7 +526,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/totalCostLabel"
             app:layout_constraintTop_toBottomOf="@id/partListContainer" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

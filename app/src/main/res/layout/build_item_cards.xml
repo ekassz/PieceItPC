@@ -58,10 +58,10 @@
         <Button
             android:id="@+id/save_build_button"
             android:layout_width="108dp"
-            android:layout_height="37dp"
+            android:layout_height="49dp"
             android:layout_marginStart="90dp"
             android:text="@string/save_build_text"
-            android:textSize="10sp"
+            android:textSize="11sp"
             app:layout_constraintTop_toBottomOf="@id/cardAuthor" />
 
 
