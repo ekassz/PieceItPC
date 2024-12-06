@@ -13,6 +13,9 @@ data class UserState(
 data class BuildState(
     val buildID : String = ""
 )
+data class LoginUser(
+    val email : String = ""
+)
 
 class UserViewModel : ViewModel() {
     private val _userState = MutableStateFlow(UserState())
@@ -21,6 +24,8 @@ class UserViewModel : ViewModel() {
     //Anisha
     private val _buildState = MutableStateFlow(BuildState())
     val buildState: StateFlow<BuildState> get() = _buildState.asStateFlow()
+    private val _loginUser = MutableStateFlow(LoginUser())
+    val loginUser: StateFlow<LoginUser> get() = _loginUser.asStateFlow()
 
     fun setUser(state: UserState) {
         _userState.update {
@@ -36,5 +41,15 @@ class UserViewModel : ViewModel() {
             currentState.copy(buildID = newVal)
         }
     }
+
+    fun getLoginUser(): String {
+        return _loginUser.value.email
+    }
+    fun setLoginUser(newVal: String) {
+        _loginUser.update { currentState ->
+            currentState.copy(email = newVal)
+        }
+    }
+
 
 }

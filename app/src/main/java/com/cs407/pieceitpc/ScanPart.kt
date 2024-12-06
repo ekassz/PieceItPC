@@ -72,13 +72,7 @@ class ScanPart : Fragment() {
         labeler.process(image)
             .addOnSuccessListener { labels ->
                 for (l in labels) {
-                    toTextBox("Item", l.text)
-                    Log.i("Item", l.text)
-                    toTextBox("Index", l.index)
-                    Log.i("Index", l.index.toString())
-                    toTextBox("Confidence", l.confidence)
-                    Log.i("Confidence", l.confidence.toString())
-                    toTextBox("Finished", "Object Labeling Complete\n--------\n")
+                    toTextBox("Here's what I found: ", l.text)
                 }
             }
             .addOnFailureListener {
@@ -114,6 +108,8 @@ class ScanPart : Fragment() {
             imageHolder.setImageBitmap(bitmap)
         }
     }
+
+
 
 
 

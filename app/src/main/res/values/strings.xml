@@ -30,5 +30,43 @@
     <string name="saved_videos">Saved Videos</string>
     <string name="build_inspo">Build Inspo</string>
     <string name="build_highlights">PC Build Highlights</string>
+
     <string name="save_build_text">save build</string>
+
+    <string name = "parts_list">Part List</string>
+    <string name = "part_case">Case: </string>
+    <string name = "part_caseCost">Case Cost: </string>
+    <string name = "part_caseFans">Case Fans: </string>
+    <string name = "part_caseFansCost">Case Fans Cost: </string>
+    <string name = "part_cpu">Cpu: </string>
+    <string name = "part_cpuCooler">Cpu Cooler: </string>
+    <string name = "part_cpuCoolerCost">Cpu Cooler Cost: </string>
+    <string name = "part_cpuCost">Cpu Cost: </string>
+    <string name = "part_custom">Custom: </string>
+    <string name = "part_customCost">Custom Cost: </string>
+    <string name = "part_memory">Memory: </string>
+    <string name = "part_memoryCost">Memory Cost: </string>
+    <string name = "part_motherboard">Motherboard: </string>
+    <string name = "part_motherboardCost">Motherboard Cost: </string>
+    <string name = "part_powerSupply">Power Supply: </string>
+    <string name = "part_powerSupplyCost">Power Supply Cost: </string>
+    <string name = "part_storage">Storage: </string>
+    <string name = "part_storageCost">Storage Cost: </string>
+    <string name = "part_videocard">Videocard: </string>
+    <string name = "part_videocardCost">Videocard Cost: </string>
+    <string name = "part_totalCost">Total Cost: </string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </resources>
