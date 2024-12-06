@@ -29,6 +29,8 @@ data class video(
 //    )
 //}
 
+/**
+
 fun getSampleYT(): List<CardItem> {
     return listOf(
         CardItem(1, R.drawable.placeholder, "Cool PC Video", "This build is optimized for 4K gaming.", "User123"),
@@ -66,5 +68,3 @@ fun getSampleOthers(): List<CardItem> {
  *     )
  * }
  */
-
-

@@ -30,4 +30,5 @@
     <string name="saved_videos">Saved Videos</string>
     <string name="build_inspo">Build Inspo</string>
     <string name="build_highlights">PC Build Highlights</string>
+    <string name="save_build_text">save build</string>
 </resources>
