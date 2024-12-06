@@ -27,6 +27,8 @@ class SavedContent : Fragment() {
     private var param2: String? = null
     private lateinit var youtubeRV: RecyclerView
     private lateinit var youtubeAdapt: CardAdapter
+    private lateinit var buildInspo: Button
+    private lateinit var savedVideos: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,11 @@ class SavedContent : Fragment() {
         youtubeRV = view.findViewById(R.id.recyclerViewYoutube)
         youtubeRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+
 //        val sampleYT = getSampleYT()
+
+        //val sampleYT = getSampleYT()
+
         //youtubeAdapt = CardAdapter(sampleYT)
         youtubeRV.adapter = youtubeAdapt
         return view
@@ -74,9 +80,13 @@ class SavedContent : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val buildInspo = view.findViewById<Button>(R.id.build_inspo)
+        buildInspo = view.findViewById(R.id.build_inspo)
         buildInspo.setOnClickListener{
-            findNavController().navigate(R.id.build_inspo)
+            findNavController().navigate(R.id.buildInspo)
+        }
+        savedVideos = view.findViewById(R.id.saved_videos)
+        savedVideos.setOnClickListener{
+            findNavController().navigate(R.id.savedContent)
         }
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)

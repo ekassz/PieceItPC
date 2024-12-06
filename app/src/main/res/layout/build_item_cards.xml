@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="215dp"
+        android:layout_height="280dp"
         android:background="@drawable/card_background"
         android:elevation="4dp"
         android:orientation="vertical"
@@ -28,22 +28,31 @@
             android:id="@+id/cardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="PC Build ~1K"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_margin="8dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="Title will be cut if too long"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/cardDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="This is my first PC build..." />
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_margin="8dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:text="Description will be cut if too long" />
 
         <TextView
             android:id="@+id/cardAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
             android:text="John Doe" />
     </LinearLayout>
 

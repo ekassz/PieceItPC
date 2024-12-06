@@ -27,6 +27,8 @@ class SavedContentOtherBuilds : Fragment() {
     private var param2: String? = null
     private lateinit var othersRV: RecyclerView
     private lateinit var othersAdapt: CardAdapter
+    private lateinit var savedVideos: Button
+    private lateinit var buildInspo: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,11 @@ class SavedContentOtherBuilds : Fragment() {
         othersRV = view.findViewById(R.id.recyclerViewBuilds)
         othersRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+
 //        val sampleOther = getSampleOthers()
+
+        //val sampleOther = getSampleOthers()
+
         //othersAdapt = CardAdapter(sampleOther)
         othersRV.adapter = othersAdapt
         return view
@@ -74,9 +80,13 @@ class SavedContentOtherBuilds : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val videos = view.findViewById<Button>(R.id.savedContent)
-        videos.setOnClickListener{
+        savedVideos = view.findViewById(R.id.saved_videos)
+        savedVideos.setOnClickListener{
             findNavController().navigate(R.id.savedContent)
+        }
+        buildInspo = view.findViewById(R.id.build_inspo)
+        buildInspo.setOnClickListener{
+            findNavController().navigate(R.id.buildInspo)
         }
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
