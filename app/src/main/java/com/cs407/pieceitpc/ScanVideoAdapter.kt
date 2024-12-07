@@ -12,25 +12,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cs407.testyoutube.YouTubeApiService
 
-class VideoAdapter(
-    private var videoList: List<YouTubeApiService.VideoItem>, tutorialHighlightsFragment: PCTutorialHighlights, viewModel: UserViewModel) :
-    RecyclerView.Adapter<VideoAdapter.videoCardHolder>() {
-        val parent = tutorialHighlightsFragment
-        val viewModel = viewModel
+class ScanVideoAdapter(
+    private var videoList: List<YouTubeApiService.VideoItem>, scanPart: ScanPart, viewModel: UserViewModel) :
+    RecyclerView.Adapter<ScanVideoAdapter.ScanVideoCardHolder>() {
+    val parent = scanPart
+    val viewModel = viewModel
 
-    inner class videoCardHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    inner class ScanVideoCardHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         var videoThumbnail: ImageView = itemView.findViewById(R.id.imageView_video)
         var videoTitle: TextView = itemView.findViewById(R.id.videoTitle)
         var videoDescription: TextView = itemView.findViewById(R.id.descriptionTextView)
     }
 
-    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : videoCardHolder{
+    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : ScanVideoCardHolder{
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.video_list_item, parent, false)
-        return videoCardHolder(view)
+        return ScanVideoCardHolder(view)
     }
 
-    override fun onBindViewHolder(holder: videoCardHolder, postion : Int){
+    override fun onBindViewHolder(holder: ScanVideoCardHolder, postion : Int){
         val currVideo = videoList[postion]
         holder.videoTitle.text = currVideo.title
         holder.videoDescription.text = currVideo.description
