@@ -48,9 +48,12 @@ android {
 
 configurations.all {
     resolutionStrategy {
-        force("io.grpc:grpc-core:1.57.2")
-        force("io.grpc:grpc-api:1.57.2")
-        force("io.grpc:grpc-context:1.57.2")
+        // Let Firebase BOM manage all versions
+        eachDependency {
+            if (requested.group == "io.grpc") {
+                useVersion("1.57.2")
+            }
+        }
     }
 }
 
@@ -79,14 +82,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     //added from lucy for firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-database:21.0.0")
     implementation("com.google.firebase:firebase-auth:23.1.0")
 
 
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -96,8 +99,8 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.15.1")
 
-    implementation("com.google.api-client:google-api-client-android:1.33.2")
-    implementation("com.google.apis:google-api-services-youtube:v3-rev222-1.25.0")
+    //implementation("com.google.api-client:google-api-client-android:2.2.0")
+    //implementation("com.google.apis:google-api-services-youtube:v3-rev222-1.25.0")
     implementation("com.google.http-client:google-http-client-gson:1.45.0")
     //implementation("com.google.android.youtube:youtube-android-player-api:1.2.2")
     implementation("com.google.apis:google-api-services-youtube:v3-rev20241117-2.0.0")
