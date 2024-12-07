@@ -19,8 +19,18 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import java.security.MessageDigest
 import com.google.firebase.auth.FirebaseAuth
+<<<<<<< HEAD
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+=======
+<<<<<<< HEAD
+=======
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
+>>>>>>> lucyUpdates
+>>>>>>> main
 
 class LoginFragment(
     private val injectedUserViewModel: UserViewModel? = null // For testing only
@@ -42,10 +52,16 @@ class LoginFragment(
     private lateinit var userPasswdKV: SharedPreferences
     //private lateinit var noteDB: NoteDatabase
 
+<<<<<<< HEAD
+    //set up authentication
+    private lateinit var auth: FirebaseAuth
+
+=======
     //used for log in
     private lateinit var auth: FirebaseAuth
 
 
+>>>>>>> lucyUpdates
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,7 +110,19 @@ class LoginFragment(
         }
 
         //TODO: does this go here?
+<<<<<<< HEAD
         auth = FirebaseAuth.getInstance()
+=======
+<<<<<<< HEAD
+        auth = FirebaseAuth.getInstance()
+=======
+        auth = Firebase.auth
+        val database = FirebaseDatabase.getInstance()
+        val users = database.getReference("users")
+
+
+>>>>>>> lucyUpdates
+>>>>>>> main
 
         usernameEditText.doAfterTextChanged {
             errorTextView.visibility = View.GONE
@@ -109,9 +137,21 @@ class LoginFragment(
             val enteredUserName = usernameEditText.text.toString().trim()
             val enteredPass = passwordEditText.text.toString().trim()
 
+<<<<<<< HEAD
             // Check validity of user input
             if (enteredUserName.isEmpty() || enteredPass.isEmpty()) {
                 errorTextView.text = "Email and password cannot be empty."
+=======
+            // TODO: Get the entered username and password from EditText fields
+            val enteredUserName = usernameEditText.text.toString()
+<<<<<<< HEAD
+=======
+
+>>>>>>> lucyUpdates
+            val enteredPass = passwordEditText.text.toString()
+/**
+            if (enteredPass == "" || enteredUserName == "") {
+>>>>>>> main
                 errorTextView.visibility = View.VISIBLE
                 return@setOnClickListener
             }
@@ -147,6 +187,65 @@ class LoginFragment(
                         errorTextView.visibility = View.VISIBLE
                     }
                 }
+<<<<<<< HEAD
+=======
+            }
+**/
+<<<<<<< HEAD
+
+            if (enteredUserName.isNotEmpty() && enteredPass.isNotEmpty()) {
+                auth.signInWithEmailAndPassword(enteredUserName, enteredPass)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            errorTextView.text = "Sign-in successful!"
+                            Toast.makeText(requireContext(), "Welcome back!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            errorTextView.text = "Sign-in failed: ${task.exception?.message}"
+                        }
+                    }
+            } else {
+                Toast.makeText(requireContext(), "Please fill out all fields.", Toast.LENGTH_SHORT).show()
+=======
+            //TODO: check validity of user input for email and password
+            if(enteredUserName.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(enteredUserName).matches() && enteredPass.isNotEmpty()) {
+                val check = checkUserWithEmail(enteredUserName)
+                Log.i("INFO", "check: "+check)
+                //inputted user is found, check if password is valid
+                if(check) {
+                    auth.signInWithEmailAndPassword(enteredUserName, enteredPass)
+                        .addOnCompleteListener { task ->
+                            //found user and password match
+                            if (task.isSuccessful) {
+                                errorTextView.text = "Sign-in successful!"
+                                Toast.makeText(requireContext(), "Welcome back, let's get building!", Toast.LENGTH_SHORT).show()
+                                //send user to home screen
+                                findNavController().navigate(R.id.home_screen)
+                            } else {
+                                //user found but password does not match
+                                errorTextView.text = "Sign-in failed: ${task.exception?.message}"
+                            }
+                        }
+                }else{
+                    //user not found, create user
+                    auth.createUserWithEmailAndPassword(enteredUserName, enteredPass)
+                    //Log.i("INFO", "after adding to database: "+auth.currentUser?.metadata?.creationTimestamp)
+                    //save user in database
+                    val index = enteredUserName.indexOf('@')
+                    //uses username as user ID ?
+                    val username = enteredUserName.substring(0, index)
+                    val newUser = Users(username, enteredUserName, enteredPass) //left password unhashed for now
+                    users.child(username).setValue(newUser)
+                    errorTextView.text = "Sign-Up successful!"
+                    //send user to home screen
+                    findNavController().navigate(R.id.home_screen)
+                    Toast.makeText(requireContext(), "Welcome to PieceItPC, let's get building!", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                errorTextView.visibility = View.VISIBLE
+                Toast.makeText(requireContext(), "Please input email/password", Toast.LENGTH_SHORT).show()
+>>>>>>> lucyUpdates
+            }
+>>>>>>> main
         }
 
     }

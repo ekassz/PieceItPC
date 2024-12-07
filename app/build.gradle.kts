@@ -67,6 +67,20 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.auth.ktx)
+<<<<<<< HEAD
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+<<<<<<< HEAD
+    //added from lucy for firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-analytics")
+}
+=======
+}
+
+>>>>>>> refs/remotes/origin/main
+=======
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
 
@@ -85,6 +99,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-database:21.0.0")
+<<<<<<< HEAD
     implementation("com.google.firebase:firebase-auth:23.1.0")
 
 
@@ -105,3 +120,7 @@ dependencies {
     //implementation("com.google.android.youtube:youtube-android-player-api:1.2.2")
     implementation("com.google.apis:google-api-services-youtube:v3-rev20241117-2.0.0")
 }
+=======
+}
+>>>>>>> lucyUpdates
+>>>>>>> main

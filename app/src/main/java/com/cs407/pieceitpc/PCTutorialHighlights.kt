@@ -72,7 +72,7 @@ class PCTutorialHighlights : Fragment() {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_p_c_tutorial_highlights, container, false)
     }
-    
+
     //might not be right but starting here
     //need to call "findNavController().popBackStack()" at some point, when loading data to present to screen
     private fun setupBackNavigation() {
@@ -83,6 +83,7 @@ class PCTutorialHighlights : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+<<<<<<< HEAD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -114,3 +115,6 @@ class PCTutorialHighlights : Fragment() {
         videoRV.adapter = videoAdapter
     }
 }
+=======
+}
+>>>>>>> main
