@@ -26,7 +26,7 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentSnapshot
 
 
-class HomeScreenFragment : Fragment() {
+class HomeScreenFragment : Fragment(), AddToSavedContent {
 
     private lateinit var cardRecyclerView: RecyclerView
     private lateinit var cardAdapter: CardAdapter
@@ -34,7 +34,7 @@ class HomeScreenFragment : Fragment() {
     private lateinit var savedContent: Button
     private lateinit var buildTuts: Button
     private lateinit var scan: ImageView
-    val viewModel: UserViewModel by activityViewModels()
+    override val viewModel: UserViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,9 +109,8 @@ class HomeScreenFragment : Fragment() {
 
                 // Wait for all tasks to complete
                 Tasks.whenAllComplete(tasks).addOnCompleteListener {
-                    cardAdapter = CardAdapter(builds, this, viewModel)
+                    cardAdapter = CardAdapter(builds, this, null, viewModel)
                     cardRecyclerView.adapter = cardAdapter
-
                 }
             }
             .addOnFailureListener { exception ->
@@ -186,7 +185,7 @@ class HomeScreenFragment : Fragment() {
                             Log.d("TTTTTT", "newdoc put " + id)
                         }
                         .addOnFailureListener{
-                            Log.d("TTTTTT", "ERROR newdoc put " + id)
+                            Log.d("FFFFF", "ERROR newdoc put " + id)
                         }
 
                 }
@@ -208,7 +207,7 @@ class HomeScreenFragment : Fragment() {
                                     Log.d("TTTTTT", "existing doc update " + doc.id)
                                 }
                                 .addOnFailureListener{
-                                    Log.d("TTTTTT", "ERROR existing doc update " + doc.id)
+                                    Log.d("FFFFFF", "ERROR existing doc update " + doc.id)
                                 }
                         }
 

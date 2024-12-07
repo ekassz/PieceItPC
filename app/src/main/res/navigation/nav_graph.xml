@@ -21,7 +21,7 @@
 
         <action
             android:id="@+id/savedContent"
-            app:destination="@id/savedContent"
+            app:destination="@id/buildInspo"
             />
         <action
             android:id="@+id/toBuildHighlights"

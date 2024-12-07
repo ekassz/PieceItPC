@@ -11,13 +11,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 
-
-
-class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreenFragment, viewModel: UserViewModel) :
+//TODO: change buildlist back to val ?
+class CardAdapter(private var buildList: List<CardItem>, homeScreen: HomeScreenFragment?, buildInspoScreen: SavedContentOtherBuilds?, viewModel: UserViewModel) :
     RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
-        val parent : HomeScreenFragment = homeScreen
+        val parent : AddToSavedContent = homeScreen ?: buildInspoScreen
+            ?: throw IllegalArgumentException("Both screens are null")
         val viewModel = viewModel
 
 
@@ -38,10 +37,10 @@ class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreen
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentBuild = buildList[position]
-
+        //might throw error
         holder.buildImage.setImageResource(currentBuild.imageResId.toInt())
-
-
+        //try
+        //holder.buildImage.setImageResource(currentBuild.imageResId as Int)
 
 
         holder.buildTitle.text = currentBuild.title
@@ -50,7 +49,7 @@ class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreen
 
 
         holder.buildSavedButton.setOnClickListener{
-            parent.addToSaveContent(currentBuild.id)
+            parent.addToSavedContent(currentBuild.id)
         }
 
 
@@ -69,12 +68,17 @@ class CardAdapter(private val buildList: List<CardItem>, homeScreen : HomeScreen
 
         holder.itemView.setOnClickListener {
             viewModel.setBuildVal(currentBuild.id)
-            parent.findNavController().navigate(R.id.toBuildHighlights)
+            (parent as Fragment).findNavController().navigate(R.id.toBuildHighlights)
 
         }
     }
 
-
     override fun getItemCount() = buildList.size
+
+    fun updateData(newBuilds: List<CardItem>) {
+        buildList = newBuilds
+        //buildList.addAll(newBuilds)
+        notifyDataSetChanged()
+    }
 }
 

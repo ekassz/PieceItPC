@@ -38,6 +38,20 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packaging {
+        resources {
+            excludes.add("META-INF/INDEX.LIST")
+            excludes.add("META-INF/DEPENDENCIES")
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("io.grpc:grpc-core:1.57.2")
+        force("io.grpc:grpc-api:1.57.2")
+        force("io.grpc:grpc-context:1.57.2")
+    }
 }
 
 dependencies {
@@ -82,7 +96,9 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.15.1")
 
-
-
-
+    implementation("com.google.api-client:google-api-client-android:1.33.2")
+    implementation("com.google.apis:google-api-services-youtube:v3-rev222-1.25.0")
+    implementation("com.google.http-client:google-http-client-gson:1.45.0")
+    //implementation("com.google.android.youtube:youtube-android-player-api:1.2.2")
+    implementation("com.google.apis:google-api-services-youtube:v3-rev20241117-2.0.0")
 }
