@@ -11,10 +11,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 
+//TODO: change buildlist back to val ?
+class CardAdapter(private var buildList: List<CardItem>, homeScreen: HomeScreenFragment?, buildInspoScreen: SavedContentOtherBuilds?, viewModel: UserViewModel) :
+
+
 class CardAdapter(private val buildList: List<CardItem>,
                   private val homeScreen : HomeScreenFragment, viewModel: UserViewModel) :
+
     RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
-        val parent : HomeScreenFragment = homeScreen
+        val parent : AddToSavedContent = homeScreen ?: buildInspoScreen
+            ?: throw IllegalArgumentException("Both screens are null")
         val viewModel = viewModel
 
 
@@ -33,22 +39,49 @@ class CardAdapter(private val buildList: List<CardItem>,
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentBuild = buildList[position]
+
+        //might throw error
+        holder.buildImage.setImageResource(currentBuild.imageResId.toInt())
+        //try
+        //holder.buildImage.setImageResource(currentBuild.imageResId as Int)
+
+
+
         //holder.buildImage.setImageResource(currentBuild.imageResId.)
+
         holder.buildTitle.text = currentBuild.title
         holder.buildDescription.text = currentBuild.description
         holder.buildAuthor.text = "by ${currentBuild.author}"
 
 
+
+        holder.buildSavedButton.setOnClickListener{
+            parent.addToSavedContent(currentBuild.id)
+        }
+
+
+        Log.d("CardAdapter", "Loading image for: ${currentBuild.title}, Path: ${currentBuild.imageResId}")
+
+        //Load the Image
+        //todo check if this is right
+        Glide.with((parent as Fragment))
+
         //Load the Image
         Glide.with(homeScreen)
+
             .load(currentBuild.imageResId)
             //.placeholder(R.drawable.pcdefault)
             .error(R.drawable.pcdefault)
             .into(holder.buildImage)
 
+
+
+        // Set click listener for the card
+
+
         holder.itemView.setOnClickListener {
             viewModel.setBuildVal(currentBuild.id)
-            parent.findNavController().navigate(R.id.toBuildHighlights)
+            (parent as Fragment).findNavController().navigate(R.id.toBuildHighlights)
 
         }
         holder.itemView.setOnLongClickListener {
@@ -56,7 +89,12 @@ class CardAdapter(private val buildList: List<CardItem>,
         }
     }
 
-
     override fun getItemCount() = buildList.size
+
+    fun updateData(newBuilds: List<CardItem>) {
+        buildList = newBuilds
+        //buildList.addAll(newBuilds)
+        notifyDataSetChanged()
+    }
 }
 
