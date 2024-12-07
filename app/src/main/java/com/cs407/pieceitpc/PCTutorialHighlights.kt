@@ -5,9 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.cs407.testyoutube.YouTubeApiService
+import com.cs407.testyoutube.YouTubeApiService.VideoItem
 import com.google.android.material.appbar.MaterialToolbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +31,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class PCTutorialHighlights : Fragment() {
+
+    private lateinit var youtubeService : YouTubeApiService
+    private lateinit var searchEditText: EditText
+    private lateinit var videoRV : RecyclerView
+    private lateinit var videoAdapter: VideoAdapter
+    private val viewModel: UserViewModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -30,6 +48,20 @@ class PCTutorialHighlights : Fragment() {
     ): View? {
         //back button
         setupBackNavigation()
+        val view = inflater.inflate(R.layout.fragment_p_c_tutorial_highlights, container, false)
+        searchEditText = view.findViewById(R.id.search_bar_text)
+        
+        videoRV = view.findViewById(R.id.recyclerView)
+        videoRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        //actually get the string
+        val searchEntry = searchEditText.text.toString()
+
+        lifecycleScope.launch {
+            val videos = getVideos(searchEntry)
+        }
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_p_c_tutorial_highlights, container, false)
     }
@@ -54,5 +86,10 @@ class PCTutorialHighlights : Fragment() {
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp() // Navigate back to the previous fragment
         }
+    }
+
+    suspend fun getVideos(search: String): List<VideoItem> {
+        val videos = youtubeService.searchVideos(search)
+        return videos
     }
 }

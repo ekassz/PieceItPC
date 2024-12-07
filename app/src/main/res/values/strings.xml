@@ -55,18 +55,5 @@
     <string name = "part_videocard">Videocard: </string>
     <string name = "part_videocardCost">Videocard Cost: </string>
     <string name = "part_totalCost">Total Cost: </string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <string name = "searchHint">Search for...</string>
 </resources>
