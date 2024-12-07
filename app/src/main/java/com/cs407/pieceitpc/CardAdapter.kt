@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 //TODO: change buildlist back to val ?
 class CardAdapter(private var buildList: List<CardItem>, homeScreen: HomeScreenFragment?, buildInspoScreen: SavedContentOtherBuilds?, viewModel: UserViewModel) :
@@ -56,13 +57,13 @@ class CardAdapter(private var buildList: List<CardItem>, homeScreen: HomeScreenF
         Log.d("CardAdapter", "Loading image for: ${currentBuild.title}, Path: ${currentBuild.imageResId}")
 
         //Load the Image
-        /**
-        Glide.with(homeScreen)
+        //todo check if this is right
+        Glide.with((parent as Fragment))
             .load(currentBuild.imageResId)
             .placeholder(R.drawable.pcdefault)
             .error(R.drawable.pcdefault)
             .into(holder.buildImage)
-        **/
+
 
         // Set click listener for the card
 

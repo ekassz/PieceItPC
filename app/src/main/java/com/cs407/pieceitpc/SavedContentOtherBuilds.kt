@@ -180,7 +180,7 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
         findNavController().navigate(R.id.buildInspo)
         }
 
-    val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.setNavigationOnClickListener {
             // Navigate back to the previous fragment
             findNavController().navigateUp()

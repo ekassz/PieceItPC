@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,8 +34,9 @@ private const val ARG_PARAM2 = "param2"
  */
 class PCTutorialHighlights : Fragment() {
 
-    private lateinit var youtubeService : YouTubeApiService
+    private val youtubeService : YouTubeApiService by lazy { YouTubeApiService() }
     private lateinit var searchEditText: EditText
+    private lateinit var enterButton: Button
     private lateinit var videoRV : RecyclerView
     private lateinit var videoAdapter: VideoAdapter
     private val viewModel: UserViewModel by activityViewModels()
@@ -49,21 +52,25 @@ class PCTutorialHighlights : Fragment() {
         //back button
         setupBackNavigation()
         val view = inflater.inflate(R.layout.fragment_p_c_tutorial_highlights, container, false)
+
+        enterButton = view.findViewById(R.id.enterButton)
         searchEditText = view.findViewById(R.id.search_bar_text)
-        
-        videoRV = view.findViewById(R.id.recyclerView)
-        videoRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        var searchEntry = ""
 
         //actually get the string
-        val searchEntry = searchEditText.text.toString()
-
-        lifecycleScope.launch {
-            val videos = getVideos(searchEntry)
+        enterButton.setOnClickListener{
+            searchEntry = searchEditText.text.toString()
+            //TODO does this all go inside here?
+            videoRV = view.findViewById(R.id.recyclerView)
+            videoRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            fetchAndDisplayVideos(searchEntry)
         }
 
 
+        return view
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_p_c_tutorial_highlights, container, false)
+        //return inflater.inflate(R.layout.fragment_p_c_tutorial_highlights, container, false)
     }
     
     //might not be right but starting here
@@ -88,8 +95,22 @@ class PCTutorialHighlights : Fragment() {
         }
     }
 
-    suspend fun getVideos(search: String): List<VideoItem> {
-        val videos = youtubeService.searchVideos(search)
-        return videos
+
+    private fun fetchAndDisplayVideos(searchFor: String) {
+        // Launch coroutine to fetch videos
+        viewLifecycleOwner.lifecycleScope.launch {
+            val videoItems = youtubeService.searchVideos(searchFor)
+            if (videoItems.isNotEmpty()) {
+                setupRecyclerView(videoItems)
+            } else {
+                Toast.makeText(requireContext(), "No videos found", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    private fun setupRecyclerView(videoItems: List<VideoItem>) {
+        videoAdapter = VideoAdapter(videoItems, this, viewModel)
+        videoRV.adapter = videoAdapter
     }
 }
