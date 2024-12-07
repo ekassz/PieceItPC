@@ -24,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 import androidx.fragment.app.viewModels
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 
 
@@ -135,20 +136,20 @@ class HomeScreenFragment : Fragment() {
         return view
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.profile_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val context = this.context
         return when(item.itemId){
-            R.id.profileOption -> {
-                Toast.makeText(context, "Profile Option Selected", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.settingsOption -> {
-                Toast.makeText(context, "Setting Option Selected", Toast.LENGTH_SHORT).show()
+            R.id.logoutNav -> {
+                FirebaseAuth.getInstance().signOut()
+                findNavController().navigate(R.id.action_home_screen_to_loginOrGuest)
+                Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show()
                 true
             }
 
