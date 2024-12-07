@@ -115,10 +115,6 @@ class ScanPart : Fragment() {
             findNavController().navigateUp() // Navigate back to the previous fragment
         }
     }
-    //might not be right but starting here
-    //findNavController().popBackStack()
-
-
 
     private fun toTextBox(label: String, value: Any) {
         textOutput.append("$label: $value\n")
