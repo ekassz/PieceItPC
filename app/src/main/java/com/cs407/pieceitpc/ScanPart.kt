@@ -17,6 +17,8 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.annotations.Nullable
 import com.google.firebase.database.core.Context
 import com.google.mlkit.vision.common.InputImage
@@ -48,6 +50,12 @@ class ScanPart : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         //show back button
+        // Set up the back button functionality
+        val toolbar = view?.findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar?.setNavigationOnClickListener {
+            // Navigate back to the previous fragment
+            findNavController().popBackStack()
+        }
         // Inflate the layout for this fragment
 //        launchCamera()
         val view: View = inflater.inflate(R.layout.fragment_scan_parts, container, false)
