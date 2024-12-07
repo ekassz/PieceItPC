@@ -41,10 +41,31 @@ android {
     // Add this block to handle conflicting META-INF files
     packaging {
         resources {
-            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+            excludes.add("META-INF/INDEX.LIST")
+            excludes.add("META-INF/DEPENDENCIES")
         }
     }
 }
+
+configurations.all {
+    resolutionStrategy {
+        // Let Firebase BOM manage all versions
+        eachDependency {
+            if (requested.group == "io.grpc") {
+                useVersion("1.57.2")
+            }
+        }
+    }
+}
+/**
+packaging {
+    resources {
+        excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+
+    }
+}**/
+
+    // Add this block to handle conflicting META-INF files
 
 dependencies {
 
@@ -56,6 +77,15 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.auth.ktx)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    //added from lucy for firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
+
+
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
 
@@ -66,13 +96,13 @@ dependencies {
     implementation(libs.vision.common)
     implementation(libs.image.labeling.common)
     implementation(libs.image.labeling.default.common)
-    implementation(libs.identity.jvm)
+    //implementation(libs.identity.jvm)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     //added from lucy for firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-database:21.0.0")
     implementation("com.google.firebase:firebase-auth:23.1.0")
@@ -82,7 +112,7 @@ dependencies {
 
 
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -92,7 +122,10 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.15.1")
 
-
-
-
+    //implementation("com.google.api-client:google-api-client-android:2.2.0")
+    //implementation("com.google.apis:google-api-services-youtube:v3-rev222-1.25.0")
+    implementation("com.google.http-client:google-http-client-gson:1.45.0")
+    //implementation("com.google.android.youtube:youtube-android-player-api:1.2.2")
+    implementation("com.google.apis:google-api-services-youtube:v3-rev20241117-2.0.0")
 }
+

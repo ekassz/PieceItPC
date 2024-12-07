@@ -1,6 +1,5 @@
 package com.cs407.pieceitpc
 
-import android.media.ThumbnailUtils
 
 data class CardItem(
     val id: String,
@@ -11,6 +10,7 @@ data class CardItem(
 )
 
 
+/**
 data class video(
     val id: Int,
     val title: String,
@@ -18,6 +18,40 @@ data class video(
     val thumbnailUtils: ThumbnailUtils,
     val link: String
 )
+**/
+
+/**
+fun getSampleBuilds(): List<CardItem> {
+    return listOf(
+        cards(1, R.drawable.placeholder, "Gaming Beast", "This build is optimized for 4K gaming.", "User123"),
+       cards(2, R.drawable.placeholder, "Budget Build", "A solid budget build for entry-level gaming.", "PCEnthusiast"),
+        cards(3, R.drawable.placeholder, "Workstation", "Perfect for video editing and rendering tasks.", "ProBuilder"),
+        cards(4, R.drawable.placeholder, "RGB Showoff", "Maximized RGB lighting for aesthetics.", "RGB_Fanatic")
+    )
+}
+**/
+/**
+
+
+//fun getSampleYT(): List<CardItem> {
+//    return listOf(
+//        CardItem("1", R.drawable.placeholder, "Gaming Beast", "This build is optimized for 4K gaming.", "User123"),
+//        CardItem("2", R.drawable.placeholder, "Budget Build", "A solid budget build for entry-level gaming.", "PCEnthusiast"),
+//        CardItem("3", R.drawable.placeholder, "Workstation", "Perfect for video editing and rendering tasks.", "ProBuilder"),
+//        CardItem("4", R.drawable.placeholder, "RGB Showoff", "Maximized RGB lighting for aesthetics.", "RGB_Fanatic")
+//    )
+//}
+//
+//fun getSampleOthers(): List<CardItem> {
+//    return listOf(
+//        CardItem("1", R.drawable.placeholder, "Gaming Beast", "This build is optimized for 4K gaming.", "User123"),
+//        CardItem("2", R.drawable.placeholder, "Budget Build", "A solid budget build for entry-level gaming.", "PCEnthusiast"),
+//        CardItem("3", R.drawable.placeholder, "Workstation", "Perfect for video editing and rendering tasks.", "ProBuilder"),
+//        CardItem("4", R.drawable.placeholder, "RGB Showoff", "Maximized RGB lighting for aesthetics.", "RGB_Fanatic")
+//    )
+//}
+
+**/
 
 // Sample data function
 //fun getSampleBuilds(): List<CardItem> {
@@ -29,8 +63,9 @@ data class video(
 //    )
 //}
 
-/*
+
 // real version
+/*
 fun getSampleYT(): List<CardItem> {
     return listOf(
         CardItem(1, R.drawable.placeholder, "Cool PC Video", "This build is optimized for 4K gaming.", "User123"),
@@ -50,9 +85,10 @@ fun getSampleOthers(): List<CardItem> {
 }
 
 
- */
+ **/
 
 // Ellie's copy-- for some reason it's not letting me run without changing this
+/**
 fun getSampleYT(): List<CardItem> {
     return listOf(
         CardItem("1", "R.drawable.placeholder", "Cool PC Video", "This build is optimized for 4K gaming.", "User123"),
@@ -71,7 +107,7 @@ fun getSampleOthers(): List<CardItem> {
     )
 }
 
-
+**/
 /**
  * fun getSampleYT(): List<CardItem> {
  *     return listOf(
@@ -91,5 +127,3 @@ fun getSampleOthers(): List<CardItem> {
  *     )
  * }
  */
-
-

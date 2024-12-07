@@ -23,7 +23,13 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.cs407.testyoutube.YouTubeApiService
+import com.cs407.testyoutube.YouTubeApiService.VideoItem
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.annotations.Nullable
 import com.google.firebase.database.core.Context
@@ -31,12 +37,17 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeler
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
+import kotlinx.coroutines.launch
 
 
 class ScanPart : Fragment() {
     private lateinit var imageHolder: ImageView
     private lateinit var textOutput: TextView
     private lateinit var scanButton: Button
+    private lateinit var videoRV: RecyclerView
+    private lateinit var videoAdapter: ScanVideoAdapter
+    private val viewModel: UserViewModel by activityViewModels()
+    private val youtubeService : YouTubeApiService by lazy { YouTubeApiService() }
     val EXTRA_INFO: String = "default"
     private var btnCapture: Button? = null
     private var imgCapture: ImageView? = null
@@ -127,11 +138,17 @@ class ScanPart : Fragment() {
         val options = ImageLabelerOptions.DEFAULT_OPTIONS
         val labeler: ImageLabeler = ImageLabeling.getClient(options)
 
+
         // TODO: Add Listeners for Label detection process
         labeler.process(image)
             .addOnSuccessListener { labels ->
                 for (l in labels) {
                     toTextBox("Here's what I found", l.text)
+                    //todo here implement recycler view of youtube videos
+                    var searchEntry = l.text
+                    videoRV = view.findViewById(R.id.scanVideoResults)
+                    videoRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    fetchAndDisplayVideos(searchEntry)
                 }
             }
             .addOnFailureListener {
@@ -172,6 +189,25 @@ class ScanPart : Fragment() {
             val bitmap = data?.extras?.get("data") as? Bitmap
             imageHolder.setImageBitmap(bitmap)
         }
+    }
+
+    //for youtube videos
+    private fun fetchAndDisplayVideos(searchFor: String) {
+        // Launch coroutine to fetch videos
+        viewLifecycleOwner.lifecycleScope.launch {
+            val videoItems = youtubeService.searchVideos(searchFor)
+            if (videoItems.isNotEmpty()) {
+                setupRecyclerView(videoItems)
+            } else {
+                Toast.makeText(requireContext(), "No videos found", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    private fun setupRecyclerView(videoItems: List<VideoItem>) {
+        videoAdapter = ScanVideoAdapter(videoItems, this, viewModel)
+        videoRV.adapter = videoAdapter
     }
 
 
