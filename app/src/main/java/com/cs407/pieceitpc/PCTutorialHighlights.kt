@@ -3,9 +3,6 @@ package com.cs407.pieceitpc
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -15,9 +12,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +21,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,7 +43,6 @@ class PCTutorialHighlights : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -92,42 +84,16 @@ class PCTutorialHighlights : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.profile_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val context = this.context
-        return when(item.itemId){
-            R.id.logoutNav -> {
-                FirebaseAuth.getInstance().signOut()
-                findNavController().navigate(R.id.action_PCTutorialHighlights_to_loginOrGuest)
-                Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-
-        // Set up the toolbar as the fragment's ActionBar
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
 
         // Set up the back button functionality
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp() // Navigate back to the previous fragment
         }
     }
-
 
 
     private fun fetchAndDisplayVideos(searchFor: String) {
@@ -148,6 +114,3 @@ class PCTutorialHighlights : Fragment() {
         videoRV.adapter = videoAdapter
     }
 }
-
-}
-

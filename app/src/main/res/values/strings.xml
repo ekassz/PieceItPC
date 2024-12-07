@@ -24,15 +24,13 @@
     <string name="delete_account">Delete Account</string>
     <string name="greeting_text">Welcome %1$s!</string>
     <string name="tutorial">PC Tutorial Highlights</string>>
+    <string name="build_highlights">PC Build Highlights</string>>
     <string name="create_account">Create Account</string>
     <string name="error">Error</string>
     <string name="label_recognition_error">Label Recognition Error</string>
     <string name="saved_videos">Saved Videos</string>
     <string name="build_inspo">Build Inspo</string>
-    <string name="build_highlights">PC Build Highlights</string>
-
     <string name="save_build_text">save build</string>
-
     <string name = "parts_list">Part List</string>
     <string name = "part_case">Case: </string>
     <string name = "part_caseCost">Case Cost: </string>

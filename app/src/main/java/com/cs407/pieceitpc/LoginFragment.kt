@@ -51,7 +51,7 @@ class LoginFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
 
-    ): View {
+        ): View {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         //noteDB = NoteDatabase.getDatabase(requireContext())
 
@@ -79,7 +79,7 @@ class LoginFragment(
         // TODO - Get shared preferences from using R.string.userPasswdKV as the name
         val context = requireContext()
         //var sharedPreferences = context.getSharedPreferences(
-           // getString(R.string.userPasswdKV), Context.MODE_PRIVATE)
+        // getString(R.string.userPasswdKV), Context.MODE_PRIVATE)
 
         return view
     }

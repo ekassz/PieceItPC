@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +18,6 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -97,6 +95,7 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
                 val tasks = mutableListOf<Task<DocumentSnapshot>>()
                 for (doc in documents) {
                     val data = doc.data
+                    val detailRef = data["detailref"] as? String
 
                     builds.add(
                         CardItem(
@@ -108,7 +107,7 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
                         )
                     )
 
-                    val detailRef = data["detailref"] as? String
+                    //val detailRef = data["detailref"] as? String
                     if (detailRef != null) {
                         // Fetch `pcBuildDetails` document
                         val task = db.collection("pcBuildDetails").document(detailRef).get()
@@ -195,7 +194,7 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-    fun addToSaveContent(id : String) : Boolean {
+    override fun addToSavedContent(id: String): Boolean {
         val db = Firebase.firestore
         db.collection("savedContent")
             .whereEqualTo("email", viewModel.getLoginUser())

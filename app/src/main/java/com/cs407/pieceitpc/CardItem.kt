@@ -1,6 +1,5 @@
 package com.cs407.pieceitpc
 
-import android.media.ThumbnailUtils
 
 data class CardItem(
     val id: String,
@@ -11,7 +10,7 @@ data class CardItem(
 )
 
 
-
+/**
 data class video(
     val id: Int,
     val title: String,
@@ -19,7 +18,7 @@ data class video(
     val thumbnailUtils: ThumbnailUtils,
     val link: String
 )
-
+**/
 
 /**
 fun getSampleBuilds(): List<CardItem> {
@@ -52,7 +51,7 @@ fun getSampleBuilds(): List<CardItem> {
 //    )
 //}
 
-
+**/
 
 // Sample data function
 //fun getSampleBuilds(): List<CardItem> {
@@ -64,9 +63,9 @@ fun getSampleBuilds(): List<CardItem> {
 //    )
 //}
 
-/*
-// real version
 
+// real version
+/*
 fun getSampleYT(): List<CardItem> {
     return listOf(
         CardItem(1, R.drawable.placeholder, "Cool PC Video", "This build is optimized for 4K gaming.", "User123"),
@@ -86,9 +85,10 @@ fun getSampleOthers(): List<CardItem> {
 }
 
 
- */
+ **/
 
 // Ellie's copy-- for some reason it's not letting me run without changing this
+/**
 fun getSampleYT(): List<CardItem> {
     return listOf(
         CardItem("1", "R.drawable.placeholder", "Cool PC Video", "This build is optimized for 4K gaming.", "User123"),
@@ -107,7 +107,7 @@ fun getSampleOthers(): List<CardItem> {
     )
 }
 
-
+**/
 /**
  * fun getSampleYT(): List<CardItem> {
  *     return listOf(
@@ -127,5 +127,3 @@ fun getSampleOthers(): List<CardItem> {
  *     )
  * }
  */
-
-

@@ -38,7 +38,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
+    // Add this block to handle conflicting META-INF files
     packaging {
         resources {
             excludes.add("META-INF/INDEX.LIST")
@@ -54,15 +54,18 @@ configurations.all {
             if (requested.group == "io.grpc") {
                 useVersion("1.57.2")
             }
-
-    // Add this block to handle conflicting META-INF files
-    packaging {
-        resources {
-            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
-
         }
     }
 }
+/**
+packaging {
+    resources {
+        excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+
+    }
+}**/
+
+    // Add this block to handle conflicting META-INF files
 
 dependencies {
 
@@ -74,6 +77,15 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.auth.ktx)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    //added from lucy for firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
+
+
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
 
@@ -84,7 +96,7 @@ dependencies {
     implementation(libs.vision.common)
     implementation(libs.image.labeling.common)
     implementation(libs.image.labeling.default.common)
-    implementation(libs.identity.jvm)
+    //implementation(libs.identity.jvm)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -116,3 +128,4 @@ dependencies {
     //implementation("com.google.android.youtube:youtube-android-player-api:1.2.2")
     implementation("com.google.apis:google-api-services-youtube:v3-rev20241117-2.0.0")
 }
+

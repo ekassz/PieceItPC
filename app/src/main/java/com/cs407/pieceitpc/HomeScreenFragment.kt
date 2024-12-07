@@ -21,7 +21,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import androidx.fragment.app.viewModels
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
@@ -158,7 +157,7 @@ class HomeScreenFragment : Fragment(), AddToSavedContent {
 
     }
 
-    fun addToSaveContent(id : String) : Boolean {
+    override fun addToSavedContent(id: String): Boolean {
         val db = Firebase.firestore
         db.collection("savedContent")
             .whereEqualTo("email", viewModel.getLoginUser())
@@ -214,4 +213,5 @@ class HomeScreenFragment : Fragment(), AddToSavedContent {
             }
         return true
     }
+
 }

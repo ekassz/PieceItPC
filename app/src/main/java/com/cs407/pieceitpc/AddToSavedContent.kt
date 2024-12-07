@@ -1,14 +1,12 @@
 package com.cs407.pieceitpc
 
 import android.util.Log
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 interface AddToSavedContent {
     val viewModel: UserViewModel
-        fun addToSavedContent(id: String): Boolean{
+        fun addToSaveContent(id: String): Boolean{
             val db = Firebase.firestore
             db.collection("savedContent")
                 .whereEqualTo("email", viewModel.getLoginUser())
@@ -64,5 +62,7 @@ interface AddToSavedContent {
                 }
             return true
         }
+
+    abstract fun addToSavedContent(id: String): Boolean
 
 }
