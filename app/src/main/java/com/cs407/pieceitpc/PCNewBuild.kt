@@ -8,6 +8,9 @@ import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -38,8 +41,10 @@ class PCNewBuild : Fragment() {
 
     private val db = com.google.firebase.ktx.Firebase.firestore
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -55,6 +60,7 @@ class PCNewBuild : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+
         // Set up the back button functionality
         toolbar.setNavigationOnClickListener {
             // Navigate back to the previous fragment
@@ -280,6 +286,22 @@ class PCNewBuild : Fragment() {
             imageUri = data?.data
             pcImageView.setImageURI(imageUri)
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val context = this.context
+        return when(item.itemId){
+            R.id.logoutNav -> {
+                FirebaseAuth.getInstance().signOut()
+                findNavController().navigate(R.id.action_newBuild_to_loginOrGuest)
+                Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
     private fun setupBackNavigation() {

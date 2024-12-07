@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F8F9FA"
+    android:background="@drawable/ogbackdrop"
     tools:context=".CreateAccount">
 
     <!-- Material Toolbar -->
@@ -27,14 +27,14 @@
         android:id="@+id/headerSection"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@color/green">
+        >
 
         <ImageView
             android:id="@+id/appIcon"
-            android:layout_width="133dp"
-            android:layout_height="145dp"
+            android:layout_width="165dp"
+            android:layout_height="162dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="0dp"
             android:contentDescription="App Icon"
             android:src="@drawable/app_icon" />
 
@@ -57,7 +57,7 @@
         android:layout_height="60dp"
         android:layout_gravity="top"
         android:layout_marginTop="240dp"
-        android:background="@color/green" />
+         />
 
     <LinearLayout
         android:id="@+id/formContent"
@@ -66,7 +66,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="32dp"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="320dp">
+        android:layout_marginTop="350dp">
 
         <TextView
             android:id="@+id/createAccountTitle"

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 
 class CardAdapter(private val buildList: List<CardItem>,
@@ -41,7 +42,7 @@ class CardAdapter(private val buildList: List<CardItem>,
         //Load the Image
         Glide.with(homeScreen)
             .load(currentBuild.imageResId)
-            .placeholder(R.drawable.pcdefault)
+            //.placeholder(R.drawable.pcdefault)
             .error(R.drawable.pcdefault)
             .into(holder.buildImage)
 

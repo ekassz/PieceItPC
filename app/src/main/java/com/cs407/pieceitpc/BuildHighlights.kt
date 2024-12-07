@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.auth.FirebaseAuth
 
 
 class BuildHighlights : Fragment() {
@@ -81,6 +84,21 @@ class BuildHighlights : Fragment() {
             }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val context = this.context
+        return when(item.itemId){
+            R.id.logoutNav -> {
+                FirebaseAuth.getInstance().signOut()
+                findNavController().navigate(R.id.action_build_highlights_to_loginOrGuest)
+                Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
     private fun getBuildDetails(database : FirebaseFirestore, detailRef: String) {
         val detailsRef = database.collection("pcBuildDetails")
             .document(detailRef)
@@ -128,7 +146,7 @@ class BuildHighlights : Fragment() {
             pcImageView?.let {
                 Glide.with(this)
                     .load(imagePath)
-                    .placeholder(R.drawable.pcdefault)
+                    //.placeholder(R.drawable.pcdefault)
                     .error(R.drawable.pcdefault)
                     .into(it)
             }
