@@ -8,6 +8,9 @@ import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -21,6 +24,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.storage.FirebaseStorage
+import java.util.UUID
 
 class PCNewBuild : Fragment() {
     private lateinit var pcImageView: ImageView
@@ -36,8 +41,10 @@ class PCNewBuild : Fragment() {
 
     private val db = com.google.firebase.ktx.Firebase.firestore
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -53,6 +60,7 @@ class PCNewBuild : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+
         // Set up the back button functionality
         toolbar.setNavigationOnClickListener {
             // Navigate back to the previous fragment
@@ -105,7 +113,14 @@ class PCNewBuild : Fragment() {
                     updateTotalCost()
                 }
 
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
         }
@@ -118,11 +133,23 @@ class PCNewBuild : Fragment() {
         submitButton.setOnClickListener {
             val buildName = buildNameEditText.text.toString()
             val buildDescription = buildDescriptionEditText.text.toString()
-            val totalCost = totalCostText.text.toString().toDouble()
+            val totalCost = totalCostText.text.toString().toDoubleOrNull() ?: 0.0
             val currentUser = FirebaseAuth.getInstance().currentUser
             val author = currentUser?.email ?: "Anonymous"
             var isValid = true
 
+            if (buildName.isEmpty() || buildDescription.isEmpty()) {
+                Toast.makeText(context, "Please fill in all required fields!", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+
+            if (imageUri == null) {
+                Toast.makeText(context, "Please select an image!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Firebase parts map
             val parts = mutableMapOf<String, Any?>()
             partNameFields.forEachIndexed { index, partNameField ->
                 val partName = partNameField.text.toString().trim()
@@ -134,39 +161,49 @@ class PCNewBuild : Fragment() {
                             parts["cpu"] = partName
                             parts["cpuCost"] = partCost
                         }
+
                         1 -> {
                             parts["cpuCooler"] = partName
                             parts["cpuCoolerCost"] = partCost
                         }
+
                         2 -> {
                             parts["motherboard"] = partName
                             parts["motherboardCost"] = partCost
                         }
+
                         3 -> {
                             parts["memory"] = partName
                             parts["memoryCost"] = partCost
                         }
+
                         4 -> {
                             parts["storage"] = partName
                             parts["storageCost"] = partCost
                         }
+
                         5 -> {
                             parts["videocard"] = partName
                             parts["videocardCost"] = partCost
                         }
+
                         6 -> {
                             parts["case"] = partName
                             parts["caseCost"] = partCost
                         }
+
                         7 -> {
                             parts["powersupply"] = partName
                             parts["powersupplyCost"] = partCost
                         }
+
                         8 -> {
                             parts["casefans"] = partName
                             parts["casefansCost"] = partCost
                         }
-                        9 -> { parts["custom"] = partName
+
+                        9 -> {
+                            parts["custom"] = partName
                             parts["customCost"] = partCost
                         }
                     }
@@ -179,44 +216,60 @@ class PCNewBuild : Fragment() {
                 }
             }
 
-            if(!isValid) return@setOnClickListener
+            if (!isValid) return@setOnClickListener
 
-            val imagePath = imageUri?.toString() ?: "android.resource://${requireContext().packageName}/drawable/pcdefault"
-
-            // Create a document in pcBuildDetails
-            val detailRefId = db.collection("pcBuildDetails").document().id
-            val detailData = mapOf(
-                "description" to buildDescription,
-                "imagePath" to imagePath,
-                "parts" to parts
-            )
-            db.collection("pcBuildDetails").document(detailRefId).set(detailData)
+            // Firebase Storage - PCBuildImages
+            val storageRef =
+                FirebaseStorage.getInstance().getReference("PCBuildImages/${UUID.randomUUID()}.jpg")
+            val stream = requireContext().contentResolver.openInputStream(imageUri!!)
+            storageRef.putStream(stream!!)
                 .addOnSuccessListener {
-                    // Create a document in pcBuilds
-                    val buildData = mapOf(
-                        "author" to author,
-                        "detailref" to detailRefId,
-                        "summary" to buildDescription,
-                        "timeMS" to System.currentTimeMillis(),
-                        "title" to buildName
-                    )
-                    db.collection("pcBuilds").add(buildData)
-                        .addOnSuccessListener {
-                            Toast.makeText(context, "Build saved successfully.", Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.home_screen)
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("FirestoreError", "Error saving build summary", e)
-                        }
+                    storageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
+                        val imageUrl = downloadUrl.toString()
+
+                        val detailRefId = db.collection("pcBuildDetails").document().id
+                        val detailData = mapOf(
+                            "description" to buildDescription,
+                            "imagePath" to imageUrl,
+                            "parts" to parts
+                        )
+
+                        db.collection("pcBuildDetails").document(detailRefId).set(detailData)
+                            .addOnSuccessListener {
+                                val buildData = mapOf(
+                                    "author" to author,
+                                    "detailref" to detailRefId,
+                                    "summary" to buildDescription,
+                                    "timeMS" to System.currentTimeMillis(),
+                                    "title" to buildName
+                                )
+
+                                db.collection("pcBuilds").add(buildData)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(
+                                            context,
+                                            "Build saved successfully.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        findNavController().navigate(R.id.home_screen)
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.e("FirestoreError", "Error saving build summary", e)
+                                    }
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("FirestoreError", "Error saving build details", e)
+                            }
+                    }
                 }
                 .addOnFailureListener { e ->
-                    Log.e("FirestoreError", "Error saving build details", e)
+                    Log.e("StorageError", "Error uploading image", e)
+                    Toast.makeText(context, "Failed to upload image!", Toast.LENGTH_SHORT).show()
                 }
         }
-
     }
 
-    private fun updateTotalCost() {
+        private fun updateTotalCost() {
         var total = 0.0
 
         costFields.forEach { editText ->
@@ -231,8 +284,24 @@ class PCNewBuild : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == AppCompatActivity.RESULT_OK) {
             imageUri = data?.data
-            pcImageView.setImageURI(imageUri) // Display selected image
+            pcImageView.setImageURI(imageUri)
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val context = this.context
+        return when(item.itemId){
+            R.id.logoutNav -> {
+                FirebaseAuth.getInstance().signOut()
+                findNavController().navigate(R.id.action_newBuild_to_loginOrGuest)
+                Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
     private fun setupBackNavigation() {

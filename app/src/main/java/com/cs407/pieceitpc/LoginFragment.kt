@@ -171,7 +171,6 @@ class LoginFragment(
                             Log.d("Login", "User ID: ${user.uid}, Email: ${user.email}")
                             Toast.makeText(requireContext(), "Welcome back, ${user.email}!", Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.home_screen)
-                            viewModel2.setLoginUser(enteredUserName)
                         } else {
                             Log.e("LoginError", "FirebaseAuth currentUser is null after successful sign-in.")
                             errorTextView.text = "Unexpected error occurred. Please try again."

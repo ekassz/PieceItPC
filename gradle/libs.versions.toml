@@ -12,20 +12,14 @@ constraintlayout = "2.1.4"
 navigationFragmentKtx = "2.8.3"
 navigationUiKtx = "2.8.3"
 firebaseAuthKtx = "23.1.0"
-<<<<<<< HEAD
-=======
 firebaseDatabase = "21.0.0"
 firebaseAuth = "23.1.0"
-<<<<<<< HEAD
 cameraLifecycle = "1.4.0"
 firebaseMlVision = "24.1.0"
 visionCommon = "17.3.0"
 imageLabelingCommon = "18.1.0"
 imageLabelingDefaultCommon = "17.0.0"
 firebaseStorageKtx = "21.0.1"
-=======
->>>>>>> lucyUpdates
->>>>>>> main
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,20 +33,14 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
-<<<<<<< HEAD
-=======
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
-<<<<<<< HEAD
 androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraLifecycle" }
 firebase-ml-vision = { group = "com.google.firebase", name = "firebase-ml-vision", version.ref = "firebaseMlVision" }
 vision-common = { group = "com.google.mlkit", name = "vision-common", version.ref = "visionCommon" }
 image-labeling-common = { group = "com.google.mlkit", name = "image-labeling-common", version.ref = "imageLabelingCommon" }
 image-labeling-default-common = { group = "com.google.mlkit", name = "image-labeling-default-common", version.ref = "imageLabelingDefaultCommon" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
-=======
->>>>>>> lucyUpdates
->>>>>>> main
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

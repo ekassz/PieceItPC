@@ -43,8 +43,8 @@
 
         <FrameLayout
             android:id="@+id/pcImageUploadContainer"
-            android:layout_width="324dp"
-            android:layout_height="161dp"
+            android:layout_width="305dp"
+            android:layout_height="211dp"
             android:layout_marginTop="60dp"
             android:background="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,21 +54,21 @@
 
             <ImageView
                 android:id="@+id/pcImageUpload"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="PC Image Upload" />
+                android:layout_width="305dp"
+                android:layout_height="211dp"
+                android:contentDescription="PC Image Upload"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/pcImageHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:text="Upload PC Image"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:gravity="center" />
+                android:textStyle="bold" />
         </FrameLayout>
 
         <Button

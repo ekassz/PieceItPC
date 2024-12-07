@@ -50,15 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-<<<<<<< HEAD
     <!-- Password EditText -->
-=======
-<<<<<<< HEAD
-    <!-- Password EditText -->
-
-=======
->>>>>>> fc270c82f938e4b4b59925494a58e238121eab42
->>>>>>> main
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="0dp"
@@ -76,16 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/login_button"
-<<<<<<< HEAD
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/passwordEditText"
-=======
-<<<<<<< HEAD
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/passwordEditText"
-=======
->>>>>>> lucyUpdates
->>>>>>> main
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
