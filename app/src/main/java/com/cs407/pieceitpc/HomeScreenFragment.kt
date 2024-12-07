@@ -21,8 +21,10 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import androidx.fragment.app.viewModels
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 
 
@@ -72,15 +74,6 @@ class HomeScreenFragment : Fragment(), AddToSavedContent {
                 val tasks = mutableListOf<Task<DocumentSnapshot>>()
                 for (doc in documents) {
                     val data = doc.data
-
-                    builds.add(CardItem(
-                        id = doc.id,
-                        imageResId = R.drawable.placeholder.toString(),
-                        title = data["title"] as? String ?: "Untitled",
-                        description = data["summary"] as? String ?: "No description",
-                        author = data["author"] as? String ?: "Unknown"
-                    ))
-
                     val detailRef = data["detailref"] as? String
                     if (detailRef != null) {
                         // Fetch `pcBuildDetails` document
@@ -106,7 +99,6 @@ class HomeScreenFragment : Fragment(), AddToSavedContent {
                             }
                     }
                 }
-
                 // Wait for all tasks to complete
                 Tasks.whenAllComplete(tasks).addOnCompleteListener {
                     cardAdapter = CardAdapter(builds, this, null, viewModel)
@@ -117,7 +109,8 @@ class HomeScreenFragment : Fragment(), AddToSavedContent {
                 Log.e("FIREBASERROR", "Error getting pc builds: $exception")
             }
 
-        //Sample Hard-Coded Card Item Data
+
+                //Sample Hard-Coded Card Item Data
 //        val sampleBuilds = getSampleBuilds()
 
 
@@ -143,20 +136,20 @@ class HomeScreenFragment : Fragment(), AddToSavedContent {
         return view
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.profile_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val context = this.context
         return when(item.itemId){
-            R.id.profileOption -> {
-                Toast.makeText(context, "Profile Option Selected", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.settingsOption -> {
-                Toast.makeText(context, "Setting Option Selected", Toast.LENGTH_SHORT).show()
+            R.id.logoutNav -> {
+                FirebaseAuth.getInstance().signOut()
+                findNavController().navigate(R.id.action_home_screen_to_loginOrGuest)
+                Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show()
                 true
             }
 
