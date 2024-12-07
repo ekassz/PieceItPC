@@ -16,6 +16,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
@@ -55,11 +57,7 @@ class ScanPart : Fragment() {
     ): View? {
         //show back button
         // Set up the back button functionality
-        val toolbar = view?.findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar?.setNavigationOnClickListener {
-            // Navigate back to the previous fragment
-            findNavController().popBackStack()
-        }
+        setupBackNavigation()
         // Inflate the layout for this fragment
 //        launchCamera()
         val view: View = inflater.inflate(R.layout.fragment_scan_parts, container, false)
@@ -70,6 +68,15 @@ class ScanPart : Fragment() {
         })
         return view
 
+    }
+
+    private fun setupBackNavigation() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     @Deprecated("Deprecated in Java")
@@ -97,6 +104,16 @@ class ScanPart : Fragment() {
         textOutput.isFocusable = false
         scanButton = view.findViewById<View>(R.id.scanButton) as Button
         scanButton.setOnClickListener { onLabel(view) }
+
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+
+        // Set up the toolbar as the fragment's ActionBar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+
+        // Set up the back button functionality
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp() // Navigate back to the previous fragment
+        }
     }
     //might not be right but starting here
     //findNavController().popBackStack()
