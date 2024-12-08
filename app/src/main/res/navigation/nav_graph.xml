@@ -59,9 +59,6 @@
         <action
             android:id="@+id/action_newBuild_to_home_screen"
             app:destination="@id/home_screen" />
-        <action
-            android:id="@+id/action_newBuild_to_loginOrGuest"
-            app:destination="@id/loginOrGuest" />
     </fragment>
 
     <fragment
@@ -75,9 +72,6 @@
         <action
             android:id="@+id/action_savedContent_buildInspo"
             app:destination="@id/buildInspo" />
-        <action
-            android:id="@+id/action_savedContent_to_loginOrGuest"
-            app:destination="@id/loginOrGuest" />
     </fragment>
 
     <fragment
@@ -148,9 +142,6 @@
             app:destination="@id/savedContent"
             app:popUpTo="@id/savedContent"
             app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_scan_to_loginOrGuest"
-            app:destination="@id/loginOrGuest" />
     </fragment>
     <fragment
         android:id="@+id/PCTutorialHighlights"
@@ -163,9 +154,6 @@
         <action
             android:id="@+id/action_PCTutorialHighlights_to_home_screen"
             app:destination="@id/home_screen" />
-        <action
-            android:id="@+id/action_PCTutorialHighlights_to_loginOrGuest"
-            app:destination="@id/loginOrGuest" />
     </fragment>
 
 

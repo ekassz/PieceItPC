@@ -90,22 +90,6 @@ class ScanPart : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val context = this.context
-        return when(item.itemId){
-            R.id.logoutNav -> {
-                FirebaseAuth.getInstance().signOut()
-                findNavController().navigate(R.id.action_scan_to_loginOrGuest)
-                Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imageHolder = view.findViewById(R.id.buildImage)

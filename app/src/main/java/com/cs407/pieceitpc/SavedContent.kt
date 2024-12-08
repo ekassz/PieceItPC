@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -83,6 +84,9 @@ class SavedContent : Fragment() {
         }
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+
+        // Set up the toolbar as the fragment's ActionBar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
 
         // Set up the back button functionality
         toolbar.setNavigationOnClickListener {
