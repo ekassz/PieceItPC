@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         }
         //Anisha - added
         FirebaseApp.initializeApp(this)
+
     }
 
 
