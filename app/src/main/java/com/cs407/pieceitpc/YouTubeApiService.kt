@@ -1,5 +1,6 @@
 package com.cs407.testyoutube
 
+import android.app.appsearch.SearchResult
 import com.google.api.client.googleapis.json.GoogleJsonResponseException
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.javanet.NetHttpTransport
