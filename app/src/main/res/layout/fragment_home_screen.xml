@@ -72,56 +72,108 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="356dp"
-            android:layout_height="163dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="28dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/tutorialCard"
+            android:layout_width="349dp"
+            android:layout_height="236dp"
+            android:layout_margin="16dp"
             android:background="@color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView">
 
-        <TextView
-            android:id="@+id/tutorialheader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="25dp"
-            android:text="Checkout our build guides on setting up your PC!"
-            app:layout_constraintBottom_toTopOf="@+id/tutorials"
-            app:layout_constraintStart_toStartOf="@+id/view"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-            app:layout_constraintVertical_bias="0.758" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <Button
-            android:id="@+id/tutorials"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="62dp"
-            android:layout_marginTop="120dp"
+                <ImageView
+                    android:id="@+id/tutorialIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="Tutorial Icon"
+                    android:src="@drawable/pcdefault" />
 
-            android:layout_marginEnd="62dp"
-            android:text="Build Tutorials"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@id/tutorialheader"
-            app:layout_constraintStart_toStartOf="@id/tutorialheader"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                <TextView
+                    android:id="@+id/tutorialHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Build Tutorials"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/scanImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/tutorialSubHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:gravity="center"
+                    android:text="Explore videos to build your perfect PC!"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/tutorials"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:backgroundTint="@color/greenDark"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="8dp"
+                    android:text="Explore Tutorials"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="315dp"
+            android:layout_height="330dp"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/scan_icon" />
+            app:layout_constraintTop_toBottomOf="@+id/tutorialCard">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/scanImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Scan Icon"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/scan_icon" />
+
+                <TextView
+                    android:id="@+id/scanText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@color/greenDark"
+                    android:padding="8dp"
+                    android:text="Scan Your PC Item"
+                    android:textColor="@android:color/black"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
