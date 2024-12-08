@@ -129,6 +129,7 @@ class LoginFragment(
                         val user = auth.currentUser
                         if (user != null) {
                             Log.d("Login", "User ID: ${user.uid}, Email: ${user.email}")
+                            viewModel2.setLoginUser(user.email as String)
                             Toast.makeText(requireContext(), "Welcome back, ${user.email}!", Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.home_screen)
                         } else {
