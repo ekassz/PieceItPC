@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cs407.testyoutube.YouTubeApiService
 
-class VideoAdapter(
-    private var videoList: List<YouTubeApiService.VideoItem>, tutorialHighlightsFragment: PCTutorialHighlights, viewModel: UserViewModel) :
-    RecyclerView.Adapter<VideoAdapter.videoCardHolder>() {
-        val parent = tutorialHighlightsFragment
-        val viewModel = viewModel
+class SavedVideosAdapter(
+    private var videoList: List<YouTubeApiService.VideoItem>, savedContent: SavedContent, viewModel: UserViewModel) :
+    RecyclerView.Adapter<SavedVideosAdapter.videoCardHolder>() {
+    val parent = savedContent
+    val viewModel = viewModel
 
     inner class videoCardHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         var videoThumbnail: ImageView = itemView.findViewById(R.id.imageView_video)
@@ -45,14 +45,14 @@ class VideoAdapter(
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=${currVideo.id}"))
             holder.itemView.context.startActivity(intent)
         }
+        /**
         //save video on long hold
         holder.itemView.setOnLongClickListener{
             //TODO add code to add video to database then display to saved videos
             //points to video ID
-            val savedVid = YouTubeApiService.VideoItem(currVideo.id, currVideo.title, currVideo.description, currVideo.thumbnailUrl, currVideo.publishedAt, )
-            parent.addToSavedVideos(savedVid)
+            parent.addToSavedVideos(currVideo.id)
             true
-        }
+        }**/
     }
 
     override fun getItemCount(): Int = videoList.size

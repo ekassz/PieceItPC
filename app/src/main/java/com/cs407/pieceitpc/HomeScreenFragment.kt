@@ -159,6 +159,7 @@ class HomeScreenFragment : Fragment(), AddToSavedContent {
 
     override fun addToSavedContent(id: String): Boolean {
         val db = Firebase.firestore
+        //Log.e("Firestore", "viewModel.getLoginUser(): "+viewModel.getLoginUser())
         db.collection("savedContent")
             .whereEqualTo("email", viewModel.getLoginUser())
             .limit(1)
