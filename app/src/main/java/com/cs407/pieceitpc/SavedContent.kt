@@ -26,7 +26,7 @@ class SavedContent : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var youtubeRV: RecyclerView
-    private lateinit var youtubeAdapt: CardAdapter
+    private lateinit var youtubeAdapt: VideoAdapter
     private lateinit var buildInspo: Button
     private lateinit var savedVideos: Button
 
@@ -47,6 +47,7 @@ class SavedContent : Fragment() {
 
         youtubeRV = view.findViewById(R.id.recyclerViewYoutube)
         youtubeRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        //VideoAdapter(videoItems, this, viewModel)
         youtubeRV.adapter = youtubeAdapt
         return view
     }

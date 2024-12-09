@@ -242,6 +242,7 @@ class PCNewBuild : Fragment() {
                                     "summary" to buildDescription,
                                     "timeMS" to System.currentTimeMillis(),
                                     "title" to buildName
+                                    //"image" to imageUrl
                                 )
 
                                 db.collection("pcBuilds").add(buildData)

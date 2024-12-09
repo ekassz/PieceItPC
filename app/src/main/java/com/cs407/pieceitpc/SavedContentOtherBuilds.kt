@@ -18,7 +18,9 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.getField
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 
 
@@ -33,13 +35,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
-        inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val buildImage: ImageView = itemView.findViewById(R.id.cardImage)
-            val buildTitle: TextView = itemView.findViewById(R.id.cardTitle)
-            val buildDescription: TextView = itemView.findViewById(R.id.cardDescription)
-            val buildAuthor: TextView = itemView.findViewById(R.id.cardAuthor)
-            val buildSavedButton: Button = itemView.findViewById(R.id.save_build_button)
-        }
+    inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val buildImage: ImageView = itemView.findViewById(R.id.cardImage)
+        val buildTitle: TextView = itemView.findViewById(R.id.cardTitle)
+        val buildDescription: TextView = itemView.findViewById(R.id.cardDescription)
+        val buildAuthor: TextView = itemView.findViewById(R.id.cardAuthor)
+        val buildSavedButton: Button = itemView.findViewById(R.id.save_build_button)
+    }
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -54,10 +56,10 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
         /**
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        param1 = it.getString(ARG_PARAM1)
+        param2 = it.getString(ARG_PARAM2)
         }
-        **/
+         **/
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
@@ -76,70 +78,87 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
         toolbar?.title = getString(R.string.app_name)
         toolbar?.setNavigationIcon(R.drawable.small_app_icon)
         toolbar?.setNavigationOnClickListener {
-            findNavController().navigateUp()
+        findNavController().navigateUp()
         }**/
 
         othersRV = view.findViewById(R.id.recyclerViewBuilds)
-        othersRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        othersRV.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         othersAdapt = CardAdapter(mutableListOf<CardItem>(), null, this, viewModel)
         othersRV.adapter = othersAdapt
 
         //TODO retrieve saved
         val db = Firebase.firestore
+        //get savedContent collection which returns the viewModel.getLoginUser for each user that has saved into the database
+        //get the specific document of the current user using the .getLoginUser
+        //.get to get the document and retrieve fields
         db.collection("savedContent")
-            //.orderBy("timeMS", Query.Direction.DESCENDING)
-            .limit(3)
+            .whereEqualTo("email", viewModel.getLoginUser())
+            .limit(1)
             .get()
-            .addOnSuccessListener { documents ->
-                val builds = mutableListOf<CardItem>()
-                val tasks = mutableListOf<Task<DocumentSnapshot>>()
-                for (doc in documents) {
-                    val data = doc.data
-                    val detailRef = data["detailref"] as? String
+            .addOnSuccessListener{ usersSavedDoc ->
+                if (usersSavedDoc != null) {
+                    for (doc in usersSavedDoc ) {
+                        var buildRefs = doc.data["savedBuilds"] as MutableList<String>
+                        val tasks = mutableListOf<Task<DocumentSnapshot>>()
+                        val savedBuilds = mutableListOf<CardItem>()
+                        //search pcBuilds given list
+                        db.collection("pcBuilds")
+                            .get()
+                            .addOnSuccessListener { allBuilds ->
+                                for (pcRef in buildRefs) {
+                                    //if there is a build reference
+                                    if (pcRef != null) {
+                                        //saved build's id that points to pcBuilds
+                                        //use id to get detail ref that points to pcBuildDetails and get image
+                                        for(build in allBuilds){
+                                            if(build.id == pcRef) {
+                                                val data = build.data
+                                                val detailRef = build.data["detailref"].toString()
+                                                val task =
+                                                    db.collection("pcBuildDetails").document(detailRef).get()
+                                                tasks.add(task)
+                                                task
+                                                    .addOnSuccessListener { detailDoc ->
+                                                        val imagePath = detailDoc["imagePath"]
+                                                            ?: "android.resource://${requireContext().packageName}/drawable/pcdefault"
+                                                        savedBuilds.add(
+                                                            CardItem(
+                                                                id = pcRef,
+                                                                imageResId = imagePath.toString(),
+                                                                title = build["title"] as? String
+                                                                    ?: "Untitled",
+                                                                description = build["summary"] as? String
+                                                                    ?: "No description",
+                                                                author = build["author"] as? String
+                                                                    ?: "Unknown"
+                                                            )
+                                                        )
+                                                    }.addOnFailureListener { exception ->
+                                                        Log.e(
+                                                            "FIREBASERROR",
+                                                            "Error getting pc details: $exception"
+                                                        )
+                                                    }
 
-                    builds.add(
-                        CardItem(
-                            id = doc.id,
-                            imageResId = R.drawable.placeholder.toString(),
-                            title = data["title"] as? String ?: "Untitled",
-                            description = data["summary"] as? String ?: "No description",
-                            author = data["author"] as? String ?: "Unknown"
-                        )
-                    )
+                                            }
+                                        }
+                                        // Wait for all tasks to complete
+                                        Tasks.whenAllComplete(tasks).addOnCompleteListener {
+                                            othersAdapt.updateData(savedBuilds)
+                                            othersRV.adapter = othersAdapt
+                                            //othersAdapt = CardAdapter(builds, null, this, viewModel)
+                                            //othersRV.adapter = othersAdapt
+                                            Log.d(
+                                                "RecyclerView",
+                                                "Adapter set with ${othersAdapt.itemCount} items."
+                                            )
+                                    }
+                                }
 
-                    //val detailRef = data["detailref"] as? String
-                    if (detailRef != null) {
-                        // Fetch `pcBuildDetails` document
-                        val task = db.collection("pcBuildDetails").document(detailRef).get()
-                        tasks.add(task)
-
-                        task
-                            .addOnSuccessListener { detailDoc ->
-                                val imagePath = detailDoc.getString("imagePath")
-                                    ?: "android.resource://${requireContext().packageName}/drawable/pcdefault"
-                                builds.add(
-                                    CardItem(
-                                        id = doc.id,
-                                        imageResId = imagePath,
-                                        title = data["title"] as? String ?: "Untitled",
-                                        description = data["summary"] as? String
-                                            ?: "No description",
-                                        author = data["author"] as? String ?: "Unknown"
-                                    )
-                                )
-                            }.addOnFailureListener { exception ->
-                                Log.e("FIREBASERROR", "Error getting pc details: $exception")
                             }
+                        }
                     }
-                }
-                // Wait for all tasks to complete
-                Tasks.whenAllComplete(tasks).addOnCompleteListener {
-                    othersAdapt.updateData(builds)
-                    //othersAdapt = CardAdapter(builds, null, this, viewModel)
-                    //othersRV.adapter = othersAdapt
-                    Log.d("RecyclerView", "Adapter set with ${othersAdapt.itemCount} items.")
-                    //othersAdapt.updateData(builds)
-
                 }
             }
             .addOnFailureListener { exception ->
@@ -147,6 +166,7 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
             }
         return view
     }
+
 /**
     companion object {
         /**
@@ -249,6 +269,11 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
                 Log.e("FIREBASERROR", "error getting pc builds " + exception)
             }
         return true
+    }
+
+    private fun getSavedBuilds(savedBuilds : Map<String,Any>){
+        val view = this.view
+
     }
 
 }
