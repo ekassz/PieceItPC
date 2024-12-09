@@ -178,7 +178,6 @@ class PCTutorialHighlights : Fragment() {
                                     Log.d("FFFFFF", "ERROR existing doc update " + doc.id)
                                 }
                         }
-
                     }
                 }
             }
