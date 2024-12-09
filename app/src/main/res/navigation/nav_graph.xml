@@ -21,8 +21,7 @@
 
         <action
             android:id="@+id/savedContent"
-            app:destination="@id/buildInspo"
-            />
+            app:destination="@id/savedContent" />
         <action
             android:id="@+id/toBuildHighlights"
             app:destination="@id/build_highlights"
@@ -91,6 +90,9 @@
         <action
             android:id="@+id/action_buildInspo_to_home_screen"
             app:destination="@id/home_screen" />
+        <action
+            android:id="@+id/action_savedContent_to_loginOrGuest"
+            app:destination="@id/loginOrGuest" />
     </fragment>
 
 
