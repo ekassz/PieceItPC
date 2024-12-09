@@ -61,6 +61,9 @@ class PCNewBuild : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
 
+        // Set up the toolbar as the fragment's ActionBar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+
         // Set up the back button functionality
         toolbar.setNavigationOnClickListener {
             // Navigate back to the previous fragment
@@ -129,7 +132,6 @@ class PCNewBuild : Fragment() {
         buildDescriptionEditText = view.findViewById(R.id.buildDescription)
         submitButton = view.findViewById(R.id.submitButton)
 
-
         submitButton.setOnClickListener {
             val buildName = buildNameEditText.text.toString()
             val buildDescription = buildDescriptionEditText.text.toString()
@@ -137,7 +139,6 @@ class PCNewBuild : Fragment() {
             val currentUser = FirebaseAuth.getInstance().currentUser
             val author = currentUser?.email ?: "Anonymous"
             var isValid = true
-
             if (buildName.isEmpty() || buildDescription.isEmpty()) {
                 Toast.makeText(context, "Please fill in all required fields!", Toast.LENGTH_SHORT)
                     .show()
@@ -287,22 +288,6 @@ class PCNewBuild : Fragment() {
             imageUri = data?.data
             pcImageView.setImageURI(imageUri)
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val context = this.context
-        return when(item.itemId){
-            R.id.logoutNav -> {
-                FirebaseAuth.getInstance().signOut()
-                findNavController().navigate(R.id.action_newBuild_to_loginOrGuest)
-                Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-
     }
 
     private fun setupBackNavigation() {
