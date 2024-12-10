@@ -66,7 +66,7 @@ class HomeScreenFragment : Fragment(), AddToSavedContent {
         val db = Firebase.firestore
         db.collection("pcBuilds")
             .orderBy("timeMS", Query.Direction.DESCENDING)
-            .limit(3)
+            .limit(7)
             .get()
             .addOnSuccessListener { documents ->
                 val builds = mutableListOf<CardItem>()
