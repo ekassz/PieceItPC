@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
@@ -21,8 +20,6 @@ import com.cs407.testyoutube.YouTubeApiService.VideoItem
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +37,7 @@ class PCTutorialHighlights : Fragment() {
     private val youtubeService : YouTubeApiService by lazy { YouTubeApiService() }
     private lateinit var searchEditText: EditText
     private lateinit var enterButton: Button
-    private lateinit var videoRV : RecyclerView
+    private lateinit var youtubeVideoRV : RecyclerView
     private lateinit var videoAdapter: VideoAdapter
     private val viewModel: UserViewModel by activityViewModels()
 
@@ -65,8 +62,8 @@ class PCTutorialHighlights : Fragment() {
         enterButton.setOnClickListener{
             searchEntry = searchEditText.text.toString()
             //TODO does this all go inside here?
-            videoRV = view.findViewById(R.id.recyclerView)
-            videoRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            youtubeVideoRV = view.findViewById(R.id.recyclerView)
+            youtubeVideoRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             fetchAndDisplayVideos(searchEntry)
         }
 
@@ -114,11 +111,10 @@ class PCTutorialHighlights : Fragment() {
 
     private fun setupRecyclerView(videoItems: List<VideoItem>) {
         videoAdapter = VideoAdapter(videoItems, this, viewModel)
-        videoRV.adapter = videoAdapter
+        youtubeVideoRV.adapter = videoAdapter
     }
 
     fun addToSavedVideos(video: YouTubeApiService.VideoItem): Boolean {
-        val userID = viewModel.getLoginUser()
         val db = Firebase.firestore
         //Log.e("Firestore", "viewModel.getLoginUser(): "+viewModel.getLoginUser())
         db.collection("savedVideos")
@@ -129,6 +125,10 @@ class PCTutorialHighlights : Fragment() {
                 if (document.isEmpty) {
                     //no saved videos yet
                     val newUserDoc = db.collection("savedVideos").document(viewModel.getLoginUser())
+                    val emailField = hashMapOf(
+                        "email" to viewModel.getLoginUser()
+                    )
+                    newUserDoc.set(emailField)
                     //new video doc is made for each new video to be added
                     val userVideoDoc = newUserDoc.collection("videos").document(video.id)
                     val savedVideos : MutableList<YouTubeApiService.VideoItem> = mutableListOf()
@@ -151,32 +151,35 @@ class PCTutorialHighlights : Fragment() {
                         }
                 }
                 else {
+                    if (document != null){
                     //should be one doc returns only one user-email doc
-                    for (doc in document ) {
-                        //returns list of video ids ?
-                        var savedVideos = doc.data["savedVideos"] as MutableList<String>
-                        //TODO another firebase search to variables here not directly on saved videos
-                        if (video.id in savedVideos) {
-                            //put toast
-                            Log.d("TTTTTT", "video exists " + id)
-                        }
-                        else {
-                            //possibly change next line
-                            savedVideos.add(video.id)
-                            val videoInfo = hashMapOf(
-                                "id" to video.id,
-                                "title" to video.title,
-                                "description" to video.description,
-                                "thumbnailUrl" to video.thumbnailUrl,
-                                "publishedAt" to video.publishedAt
-                            )
-                            db.collection("savedContent").document(viewModel.getLoginUser()).collection("videos").document(doc.id).set(videoInfo)
-                                .addOnSuccessListener {
-                                    Log.d("TTTTTT", "existing doc update " + doc.id)
-                                }
-                                .addOnFailureListener{
-                                    Log.d("FFFFFF", "ERROR existing doc update " + doc.id)
-                                }
+                        for (doc in document) {
+                            //returns list of video ids ?
+                            val docID = doc.id
+                            var savedVideos = doc.data["savedVideos"] as MutableList<String>
+                            //TODO another firebase search to variables here not directly on saved videos
+                            if (video.id in savedVideos) {
+                                //put toast
+                                Log.d("TTTTTT", "video exists " + id)
+                            } else {
+                                //possibly change next line
+                                savedVideos.add(video.id)
+                                val videoInfo = hashMapOf(
+                                    "id" to video.id,
+                                    "title" to video.title,
+                                    "description" to video.description,
+                                    "thumbnailUrl" to video.thumbnailUrl,
+                                    "publishedAt" to video.publishedAt
+                                )
+                                db.collection("savedContent").document(viewModel.getLoginUser())
+                                    .collection("videos").document(doc.id).set(videoInfo)
+                                    .addOnSuccessListener {
+                                        Log.d("TTTTTT", "existing doc update " + doc.id)
+                                    }
+                                    .addOnFailureListener {
+                                        Log.d("FFFFFF", "ERROR existing doc update " + doc.id)
+                                    }
+                            }
                         }
                     }
                 }

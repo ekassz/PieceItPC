@@ -1,6 +1,7 @@
 package com.cs407.pieceitpc
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cs407.testyoutube.YouTubeApiService
 import com.cs407.testyoutube.YouTubeApiService.VideoItem
 import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
@@ -43,7 +47,7 @@ class SavedContent : Fragment() {
     private val youtubeService : YouTubeApiService by lazy { YouTubeApiService() }
     private lateinit var videoRV : RecyclerView
      val viewModel: UserViewModel by activityViewModels()
-    private var savedVideoList = mutableListOf<YouTubeApiService.VideoItem>()
+    private var savedVideoList = mutableListOf<VideoItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,11 +75,70 @@ class SavedContent : Fragment() {
 
         videoRV = view.findViewById(R.id.recyclerViewYoutube)
         videoRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        youtubeAdapt = SavedVideosAdapter(mutableListOf<YouTubeApiService.VideoItem>(), this, viewModel)
+        youtubeAdapt = SavedVideosAdapter(mutableListOf<VideoItem>(), this, viewModel)
         videoRV.adapter = youtubeAdapt
 
         val db = Firebase.firestore
 
+        //get saved content and the document with the user based email
+        db.collection("savedVideos")
+            .whereEqualTo("email", viewModel.loginUser.value.email)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { usersSavedDoc ->
+                //only one usersSavedDoc
+                Log.i("INFO", "usersSavedDoc: "+usersSavedDoc.toString())//i get this log
+                Log.i("INFO", "usersSavedDoc length: "+usersSavedDoc.size())
+                if (usersSavedDoc != null) {
+                    Log.i("INFO", "usersaved doc not null") //i get this log
+                    for (doc in usersSavedDoc ) {
+                        //get list of all video ids
+                        val tasks = mutableListOf<Task<QuerySnapshot>>()
+                        db.collection("savedVideos").document(doc.id).collection("videos")
+                            .get()
+                            .addOnSuccessListener { videoListID ->
+                                Log.i("INFO", "videoList document id"+videoListID.toString())
+                                if(videoListID != null){
+                                    for(vid in videoListID){
+                                        var task = db.collection("savedVideos").document(doc.id).collection("videos").get()
+                                        tasks.add(task)
+                                        task
+                                            .addOnSuccessListener { videoListID ->
+                                                if (videoListID != null) {
+                                                    for (vid in videoListID) {
+                                                        savedVideoList.add(
+                                                            VideoItem(
+                                                                id = vid["id"].toString(),
+                                                                title = vid["title"].toString(),
+                                                                description = vid["description"].toString(),
+                                                                thumbnailUrl = vid["thumbnailUrl"].toString(),
+                                                                publishedAt = vid["publishedAt"].toString()
+                                                            )
+                                                        )
+                                                    }
+                                                }
+                                            }.addOnFailureListener { exception ->
+                                                Log.e(
+                                                    "FIREBASERROR",
+                                                    "Error getting pc details: $exception"
+                                                )
+                                            }
+
+                                    }
+                                }
+
+                            }
+                        Tasks.whenAllComplete(tasks).addOnCompleteListener {
+                            setupRecyclerView(savedVideoList)
+                            Log.d(
+                                "RecyclerView",
+                                "Adapter set with ${youtubeAdapt.itemCount} items."
+                            )
+                        }
+                    }
+                    // Wait for all tasks to complete
+                }
+            }
         return view
     }
 
@@ -129,38 +192,12 @@ class SavedContent : Fragment() {
         }
     }
 
-    private fun fetchAndDisplayVideos() {/**
-        // Launch coroutine to fetch videos
-        val db = Firebase.firestore
-        viewLifecycleOwner.lifecycleScope.launch {
-            db.collection("savedContent")
-                .whereEqualTo("email", viewModel.getLoginUser())
-                .limit(1)
-                .get()
-                .addOnSuccessListener{ usersSavedVideos ->
-                    if (usersSavedVideos != null) {
-                        for (vidRef in  usersSavedVideos) {
-                            var videoItemRefs = vidRef.data["savedBuilds"] as MutableList<YouTubeApiService.VideoItem>
-                            val tasks = mutableListOf<Task<DocumentSnapshot>>()
-                            val savedBuilds = mutableListOf<YouTubeApiService.VideoItem>()
-
-
-                        }
-                    }
-                }
-            val videoItems : YouTubeApiService.VideoItem
-            if (videoItems.isNotEmpty()) {
-                setupRecyclerView(videoItems)
-            } else {
-                Toast.makeText(requireContext(), "No videos found", Toast.LENGTH_SHORT).show()
-            }
-        }**/
-    }
-
 
     private fun setupRecyclerView(videoItems: List<VideoItem>) {
-        youtubeAdapt = SavedVideosAdapter(videoItems, this, viewModel)
-        videoRV.adapter = youtubeAdapt
+        if(videoItems!= null) {
+            youtubeAdapt = SavedVideosAdapter(videoItems, this, viewModel)
+            videoRV.adapter = youtubeAdapt
+        }
     }
 
 }

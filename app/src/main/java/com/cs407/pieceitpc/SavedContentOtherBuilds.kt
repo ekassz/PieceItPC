@@ -35,13 +35,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
-    inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val buildImage: ImageView = itemView.findViewById(R.id.cardImage)
-        val buildTitle: TextView = itemView.findViewById(R.id.cardTitle)
-        val buildDescription: TextView = itemView.findViewById(R.id.cardDescription)
-        val buildAuthor: TextView = itemView.findViewById(R.id.cardAuthor)
-        val buildSavedButton: Button = itemView.findViewById(R.id.save_build_button)
-    }
+
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -99,6 +93,7 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
             .addOnSuccessListener{ usersSavedDoc ->
                 if (usersSavedDoc != null) {
                     for (doc in usersSavedDoc ) {
+
                         var buildRefs = doc.data["savedBuilds"] as MutableList<String>
                         val tasks = mutableListOf<Task<DocumentSnapshot>>()
                         val savedBuilds = mutableListOf<CardItem>()
