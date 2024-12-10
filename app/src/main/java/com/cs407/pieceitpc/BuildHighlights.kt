@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
@@ -62,6 +63,8 @@ class BuildHighlights : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        // Set up the toolbar as the fragment's ActionBar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         // Set up the back button functionality
         toolbar.setNavigationOnClickListener {
             // Navigate back to the previous fragment

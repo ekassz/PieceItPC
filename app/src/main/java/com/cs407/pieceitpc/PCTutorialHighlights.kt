@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -88,7 +89,8 @@ class PCTutorialHighlights : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-
+        // Set up the toolbar as the fragment's ActionBar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         // Set up the back button functionality
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp() // Navigate back to the previous fragment

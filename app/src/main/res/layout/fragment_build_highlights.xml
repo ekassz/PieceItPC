@@ -19,7 +19,6 @@
             android:titleTextColor="@android:color/white"
             app:contentInsetStart="15dp"
             app:contentInsetStartWithNavigation="15dp"
-            app:menu="@menu/profile_menu"
             app:navigationIcon="@drawable/back"
             tools:ignore="MissingConstraints" />
 

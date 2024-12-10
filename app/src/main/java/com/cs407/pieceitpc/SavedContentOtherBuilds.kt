@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -195,6 +196,8 @@ class SavedContentOtherBuilds : Fragment(), AddToSavedContent {
         }
 
          val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        // Set up the toolbar as the fragment's ActionBar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener {
             // Navigate back to the previous fragment
             findNavController().navigateUp()
